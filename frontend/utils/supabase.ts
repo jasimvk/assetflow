@@ -1,9 +1,19 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-anon-key';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+let supabaseInstance: SupabaseClient | null = null;
+
+export const getSupabaseClient = () => {
+  if (!supabaseInstance && supabaseUrl && supabaseAnonKey) {
+    supabaseInstance = createClient(supabaseUrl, supabaseAnonKey);
+  }
+  return supabaseInstance;
+};
+
+// For backward compatibility
+export const supabase = getSupabaseClient();
 
 export interface Asset {
   id: string;
@@ -46,7 +56,10 @@ export interface User {
 
 // Asset API functions
 export const getAssets = async () => {
-  const { data, error } = await supabase
+  const client = getSupabaseClient();
+  if (!client) return [];
+  
+  const { data, error } = await client
     .from('assets')
     .select('*')
     .order('created_at', { ascending: false });
@@ -56,7 +69,10 @@ export const getAssets = async () => {
 };
 
 export const getAssetById = async (id: string) => {
-  const { data, error } = await supabase
+  const client = getSupabaseClient();
+  if (!client) return null;
+  
+  const { data, error } = await client
     .from('assets')
     .select('*')
     .eq('id', id)
@@ -67,7 +83,10 @@ export const getAssetById = async (id: string) => {
 };
 
 export const createAsset = async (asset: Omit<Asset, 'id' | 'created_at' | 'updated_at'>) => {
-  const { data, error } = await supabase
+  const client = getSupabaseClient();
+  if (!client) return null;
+  
+  const { data, error } = await client
     .from('assets')
     .insert([asset])
     .select()
@@ -78,7 +97,10 @@ export const createAsset = async (asset: Omit<Asset, 'id' | 'created_at' | 'upda
 };
 
 export const updateAsset = async (id: string, updates: Partial<Asset>) => {
-  const { data, error } = await supabase
+  const client = getSupabaseClient();
+  if (!client) return null;
+  
+  const { data, error } = await client
     .from('assets')
     .update(updates)
     .eq('id', id)
@@ -90,7 +112,10 @@ export const updateAsset = async (id: string, updates: Partial<Asset>) => {
 };
 
 export const deleteAsset = async (id: string) => {
-  const { error } = await supabase
+  const client = getSupabaseClient();
+  if (!client) return;
+  
+  const { error } = await client
     .from('assets')
     .delete()
     .eq('id', id);
@@ -100,7 +125,10 @@ export const deleteAsset = async (id: string) => {
 
 // Maintenance API functions
 export const getMaintenanceRecords = async (assetId?: string) => {
-  let query = supabase
+  const client = getSupabaseClient();
+  if (!client) return [];
+  
+  let query = client
     .from('maintenance_records')
     .select('*, assets(name)');
   
@@ -115,7 +143,10 @@ export const getMaintenanceRecords = async (assetId?: string) => {
 };
 
 export const createMaintenanceRecord = async (record: Omit<MaintenanceRecord, 'id' | 'created_at' | 'updated_at'>) => {
-  const { data, error } = await supabase
+  const client = getSupabaseClient();
+  if (!client) return null;
+  
+  const { data, error } = await client
     .from('maintenance_records')
     .insert([record])
     .select()
@@ -126,7 +157,10 @@ export const createMaintenanceRecord = async (record: Omit<MaintenanceRecord, 'i
 };
 
 export const updateMaintenanceRecord = async (id: string, updates: Partial<MaintenanceRecord>) => {
-  const { data, error } = await supabase
+  const client = getSupabaseClient();
+  if (!client) return null;
+  
+  const { data, error } = await client
     .from('maintenance_records')
     .update(updates)
     .eq('id', id)
