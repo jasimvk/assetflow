@@ -12,9 +12,6 @@ export const getSupabaseClient = () => {
   return supabaseInstance;
 };
 
-// For backward compatibility
-export const supabase = getSupabaseClient();
-
 export interface Asset {
   id: string;
   name: string;
