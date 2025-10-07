@@ -22,50 +22,41 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // In development mode, automatically authenticate with mock user
-    if (process.env.NODE_ENV === 'development') {
+    // Auto-authenticate for demo purposes (bypassing Azure AD)
+    // Check for existing auth token or auto-login
+    const token = localStorage.getItem('auth_token');
+    if (!token) {
+      // Auto-login for demo
       setUser({
-        id: 'dev-user-123',
-        email: 'dev@example.com',
-        name: 'Development User',
+        id: 'demo-user-123',
+        email: 'demo@assetflow.com',
+        name: 'Demo User',
         role: 'admin'
       });
-      localStorage.setItem('auth_token', 'dev-token-123');
+      localStorage.setItem('auth_token', 'demo-token-123');
     } else {
-      // Check for existing auth token in localStorage for production
-      const token = localStorage.getItem('auth_token');
-      if (token) {
-        // In production, validate token with backend
-        // For now, just set mock user
-        setUser({
-          id: 'prod-user-123',
-          email: 'user@company.com',
-          name: 'Production User',
-          role: 'user'
-        });
-      }
+      // Use existing token
+      setUser({
+        id: 'demo-user-123',
+        email: 'demo@assetflow.com',
+        name: 'Demo User',
+        role: 'admin'
+      });
     }
     setLoading(false);
   }, []);
 
   const login = async () => {
     try {
-      // In development mode, simulate login
-      if (process.env.NODE_ENV === 'development') {
-        const mockUser = {
-          id: 'dev-user-123',
-          email: 'dev@example.com',
-          name: 'Development User',
-          role: 'admin'
-        };
-        setUser(mockUser);
-        localStorage.setItem('auth_token', 'dev-token-123');
-        return;
-      }
-
-      // In production, this would use Azure AD MSAL
-      // For now, show an alert about configuration needed
-      alert('Azure AD authentication needs to be configured for production use');
+      // Auto-login for demo (bypassing Azure AD)
+      const mockUser = {
+        id: 'demo-user-123',
+        email: 'demo@assetflow.com',
+        name: 'Demo User',
+        role: 'admin'
+      };
+      setUser(mockUser);
+      localStorage.setItem('auth_token', 'demo-token-123');
     } catch (error) {
       console.error('Login failed:', error);
     }

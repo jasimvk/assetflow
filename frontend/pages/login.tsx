@@ -49,15 +49,13 @@ const Login = () => {
             </button>
           </div>
           
-          {/* Development mode notice */}
-          {process.env.NODE_ENV === 'development' && (
-            <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-md">
-              <p className="text-sm text-yellow-700">
-                <strong>Development Mode:</strong> Authentication is simplified for development. 
-                In production, this will use Azure AD single sign-on.
-              </p>
-            </div>
-          )}
+          {/* Demo mode notice */}
+          <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-md">
+            <p className="text-sm text-blue-700">
+              <strong>Demo Mode:</strong> This is a demonstration version with authentication bypassed. 
+              Click "Sign In" to access the application.
+            </p>
+          </div>
         </div>
       </div>
     </div>

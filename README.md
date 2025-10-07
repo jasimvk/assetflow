@@ -1,4 +1,4 @@
-# AssetFlow - Enterprise Asset Management Tool 
+# AssetFlow - Enterprise Asset Management Tool
 
 A comprehensive enterprise asset management solution built with React/Next.js frontend, Node.js/Express backend, Supabase database, and integrated with Microsoft Azure AD (Entra ID) for authentication and email notifications.
 
