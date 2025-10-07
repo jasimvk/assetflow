@@ -149,6 +149,20 @@ const Dashboard = () => {
       bgColor: 'bg-blue-100',
     },
     {
+      name: 'In Maintenance',
+      value: assetsInMaintenance.toString(),
+      icon: Calendar,
+      color: 'text-yellow-600',
+      bgColor: 'bg-yellow-100',
+    },
+    {
+      name: 'Upcoming Maintenance',
+      value: upcomingMaintenance.toString(),
+      icon: Users,
+      color: 'text-green-600',
+      bgColor: 'bg-green-100',
+    },
+    {
       name: 'Total Value',
       value: `$${totalValue.toLocaleString()}`,
       icon: TrendingUp,
@@ -159,23 +173,8 @@ const Dashboard = () => {
 
   return (
     <Layout title="Dashboard">
-      {/* Page Header */}
-      <div className="mb-5">
-        <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 bg-clip-text text-transparent mb-2">
-          Dashboard
-        </h1>
-        <div className="flex items-center space-x-2 text-sm text-gray-500">
-          <span>Home</span>
-          <span>•</span>
-          <span>Dashboard</span>
-          <span>•</span>
-          <span>{new Date().toLocaleDateString()}</span>
-        </div>
-      </div>
-
-      {/* Dashboard Content */}
-      <div className="space-y-6">
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <div className="space-y-8">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
           {stats.map((stat, index) => (
             <div key={stat.name} className="group relative">
               <div className="bg-white/70 backdrop-blur-sm border border-gray-200/60 rounded-3xl p-6 shadow-sm hover:shadow-lg hover:bg-white/90 transition-all duration-300 group-hover:scale-105">
@@ -207,14 +206,15 @@ const Dashboard = () => {
           ))}
         </div>
 
-        <div className="bg-white/70 backdrop-blur-sm border border-gray-200/60 rounded-3xl p-8 shadow-sm hover:shadow-lg transition-all duration-300">
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-xl font-bold text-gray-900">Recent Assets</h3>
-            <div className="flex items-center text-sm text-gray-500">
-              <div className="w-2 h-2 bg-blue-400 rounded-full mr-2"></div>
-              {assets.length} total assets
+        <div className="grid grid-cols-1 gap-8 xl:grid-cols-2">
+          <div className="bg-white/70 backdrop-blur-sm border border-gray-200/60 rounded-3xl p-8 shadow-sm hover:shadow-lg transition-all duration-300">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl font-bold text-gray-900">Recent Assets</h3>
+              <div className="flex items-center text-sm text-gray-500">
+                <div className="w-2 h-2 bg-blue-400 rounded-full mr-2"></div>
+                {assets.length} total assets
+              </div>
             </div>
-          </div>
             <div className="space-y-4">
               {assets.length === 0 ? (
                 <div className="text-center py-8">
@@ -258,6 +258,55 @@ const Dashboard = () => {
               )}
             </div>
           </div>
+
+          <div className="bg-white/70 backdrop-blur-sm border border-gray-200/60 rounded-3xl p-8 shadow-sm hover:shadow-lg transition-all duration-300">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl font-bold text-gray-900">Upcoming Maintenance</h3>
+              <div className="flex items-center text-sm text-gray-500">
+                <div className="w-2 h-2 bg-orange-400 rounded-full mr-2 animate-pulse"></div>
+                {upcomingMaintenance} due this week
+              </div>
+            </div>
+            <div className="space-y-4">
+              {maintenanceRecords
+                .filter(record => record.status === 'scheduled')
+                .slice(0, 5)
+                .map((record, index) => (
+                  <div key={record.id} className="group p-4 rounded-2xl hover:bg-gray-50/80 transition-all duration-200">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-4">
+                        <div className="w-12 h-12 bg-gradient-to-br from-orange-100 to-orange-200 rounded-2xl flex items-center justify-center">
+                          <Calendar className="h-6 w-6 text-orange-600" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-semibold text-gray-900 group-hover:text-orange-600 transition-colors">
+                            {record.maintenance_type}
+                          </p>
+                          <p className="text-xs text-gray-500">
+                            Asset ID: {record.asset_id}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-bold text-gray-900">
+                          {new Date(record.scheduled_date).toLocaleDateString()}
+                        </p>
+                        <span className="inline-flex px-3 py-1 text-xs font-semibold rounded-full bg-orange-100 text-orange-700 border border-orange-200">
+                          {record.status}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              {maintenanceRecords.filter(record => record.status === 'scheduled').length === 0 && (
+                <div className="text-center py-8">
+                  <Calendar className="mx-auto h-12 w-12 text-gray-300 mb-4" />
+                  <p className="text-gray-500 text-sm">No upcoming maintenance scheduled</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     </Layout>
   );

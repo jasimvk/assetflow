@@ -1,8 +1,16 @@
-const jwt = require('jsonwebtoken');
-const { msalInstance } = require('../config/azure');
-
 const authMiddleware = async (req, res, next) => {
   try {
+    // For development mode, bypass authentication
+    if (process.env.NODE_ENV === 'development') {
+      req.user = { 
+        id: 'dev-user-123', 
+        email: 'dev@example.com', 
+        role: 'admin',
+        name: 'Development User'
+      };
+      return next();
+    }
+
     const authHeader = req.headers.authorization;
     
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -11,19 +19,17 @@ const authMiddleware = async (req, res, next) => {
 
     const token = authHeader.substring(7); // Remove 'Bearer ' prefix
     
-    // For development, you might want to skip token validation
     // In production, validate the JWT token from Azure AD
-    if (process.env.NODE_ENV === 'development' && token === 'dev-token') {
-      req.user = { id: 'dev-user', email: 'dev@example.com' };
-      return next();
-    }
-
-    // In production, validate the token with Azure AD
     // This is a simplified version - in production you'd want to validate the JWT signature
     try {
-      // You would typically validate the JWT token here
-      // For now, we'll accept any token in development
-      req.user = { id: 'user-id', email: 'user@company.com' };
+      // You would typically validate the JWT token here with Azure AD
+      // For now, we'll accept any token and create a mock user
+      req.user = { 
+        id: 'user-id-456', 
+        email: 'user@company.com',
+        role: 'manager',
+        name: 'Production User'
+      };
       next();
     } catch (tokenError) {
       return res.status(401).json({ error: 'Invalid token' });

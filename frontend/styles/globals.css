@@ -1,47 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  font-family: 'Inter', sans-serif;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
 }
 
-.sidebar {
-  @apply bg-white shadow-lg border-r border-gray-200;
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
 }
 
-.main-content {
-  @apply bg-gray-50 min-h-screen;
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
 }
 
-.card {
-  @apply bg-white rounded-lg shadow-md p-6 border border-gray-200;
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full;
 }
 
-.btn-primary {
-  @apply bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md transition-colors;
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400;
 }
 
-.btn-secondary {
-  @apply bg-secondary-100 hover:bg-secondary-200 text-secondary-700 px-4 py-2 rounded-md transition-colors;
+@layer components {
+  .sidebar {
+    @apply bg-white/95 backdrop-blur-sm shadow-custom-xl border-r border-gray-200/50;
+  }
+
+  .main-content {
+    @apply bg-gradient-to-br from-slate-50 to-blue-50 min-h-screen;
+  }
+
+  .card {
+    @apply bg-white/80 backdrop-blur-sm rounded-2xl shadow-custom-lg p-6 border border-white/20 hover:shadow-custom-xl transition-all duration-300;
+  }
+
+  .card-compact {
+    @apply bg-white/90 backdrop-blur-sm rounded-xl shadow-custom p-4 border border-white/30 hover:shadow-custom-lg transition-all duration-300;
+  }
+
+  .btn-primary {
+    @apply bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5;
+  }
+
+  .btn-secondary {
+    @apply bg-white/80 backdrop-blur-sm hover:bg-white text-secondary-700 hover:text-secondary-800 px-6 py-3 rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-xl border border-white/30;
+  }
+
+  .btn-ghost {
+    @apply text-secondary-600 hover:text-secondary-800 hover:bg-white/50 px-4 py-2 rounded-lg font-medium transition-all duration-300;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 bg-white/80 backdrop-blur-sm border border-white/30 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300 placeholder-gray-400;
+  }
+
+  .select-field {
+    @apply px-4 py-3 bg-white/80 backdrop-blur-sm border border-white/30 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300;
+  }
+
+  .stat-card {
+    @apply bg-gradient-to-br from-white/90 to-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-custom-lg border border-white/30 hover:shadow-custom-xl transition-all duration-300 hover:-translate-y-1;
+  }
+
+  .badge-excellent {
+    @apply inline-flex px-3 py-1 text-sm font-medium rounded-full bg-gradient-to-r from-success-100 to-success-200 text-success-800 border border-success-300;
+  }
+
+  .badge-good {
+    @apply inline-flex px-3 py-1 text-sm font-medium rounded-full bg-gradient-to-r from-primary-100 to-primary-200 text-primary-800 border border-primary-300;
+  }
+
+  .badge-fair {
+    @apply inline-flex px-3 py-1 text-sm font-medium rounded-full bg-gradient-to-r from-warning-100 to-warning-200 text-warning-800 border border-warning-300;
+  }
+
+  .badge-poor {
+    @apply inline-flex px-3 py-1 text-sm font-medium rounded-full bg-gradient-to-r from-danger-100 to-danger-200 text-danger-800 border border-danger-300;
+  }
+
+  .table-row {
+    @apply hover:bg-gradient-to-r hover:from-primary-50/50 hover:to-blue-50/50 transition-all duration-300;
+  }
+
+  .glass-effect {
+    @apply bg-white/20 backdrop-blur-md border border-white/30 shadow-custom-lg;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent;
+  }
 }

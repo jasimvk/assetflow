@@ -1,23 +1,14 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { PublicClientApplication, AccountInfo } from '@azure/msal-browser';
-import { MsalProvider } from '@azure/msal-react';
 
-const msalConfig = {
-  auth: {
-    clientId: process.env.NEXT_PUBLIC_AZURE_CLIENT_ID || '',
-    authority: `https://login.microsoftonline.com/${process.env.NEXT_PUBLIC_AZURE_TENANT_ID}`,
-    redirectUri: '/',
-  },
-  cache: {
-    cacheLocation: 'sessionStorage',
-    storeAuthStateInCookie: false,
-  },
-};
-
-const msalInstance = new PublicClientApplication(msalConfig);
+interface User {
+  id: string;
+  email: string;
+  name: string;
+  role: string;
+}
 
 interface AuthContextType {
-  user: AccountInfo | null;
+  user: User | null;
   login: () => Promise<void>;
   logout: () => Promise<void>;
   isAuthenticated: boolean;
@@ -27,23 +18,54 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<AccountInfo | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const accounts = msalInstance.getAllAccounts();
-    if (accounts.length > 0) {
-      setUser(accounts[0]);
+    // In development mode, automatically authenticate with mock user
+    if (process.env.NODE_ENV === 'development') {
+      setUser({
+        id: 'dev-user-123',
+        email: 'dev@example.com',
+        name: 'Development User',
+        role: 'admin'
+      });
+      localStorage.setItem('auth_token', 'dev-token-123');
+    } else {
+      // Check for existing auth token in localStorage for production
+      const token = localStorage.getItem('auth_token');
+      if (token) {
+        // In production, validate token with backend
+        // For now, just set mock user
+        setUser({
+          id: 'prod-user-123',
+          email: 'user@company.com',
+          name: 'Production User',
+          role: 'user'
+        });
+      }
     }
     setLoading(false);
   }, []);
 
   const login = async () => {
     try {
-      const loginResponse = await msalInstance.loginPopup({
-        scopes: ['User.Read', 'Mail.Send'],
-      });
-      setUser(loginResponse.account);
+      // In development mode, simulate login
+      if (process.env.NODE_ENV === 'development') {
+        const mockUser = {
+          id: 'dev-user-123',
+          email: 'dev@example.com',
+          name: 'Development User',
+          role: 'admin'
+        };
+        setUser(mockUser);
+        localStorage.setItem('auth_token', 'dev-token-123');
+        return;
+      }
+
+      // In production, this would use Azure AD MSAL
+      // For now, show an alert about configuration needed
+      alert('Azure AD authentication needs to be configured for production use');
     } catch (error) {
       console.error('Login failed:', error);
     }
@@ -51,8 +73,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const logout = async () => {
     try {
-      await msalInstance.logoutPopup();
       setUser(null);
+      localStorage.removeItem('auth_token');
     } catch (error) {
       console.error('Logout failed:', error);
     }
@@ -67,11 +89,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <MsalProvider instance={msalInstance}>
-      <AuthContext.Provider value={value}>
-        {children}
-      </AuthContext.Provider>
-    </MsalProvider>
+    <AuthContext.Provider value={value}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 

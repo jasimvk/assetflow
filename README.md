@@ -1,53 +1,77 @@
-Got it. Here’s an extensive, Copilot-ready README for your project with all the requested details. I’ve structured it to be detailed enough that GitHub Copilot or any AI assistant could scaffold most of the code for you.
+# AssetFlow - Enterprise Asset Management Tool
 
-⸻
+A comprehensive enterprise asset management solution built with React/Next.js frontend, Node.js/Express backend, Supabase database, and integrated with Microsoft Azure AD (Entra ID) for authentication and email notifications.
 
-AssetFlow – Enterprise Asset Management Tool
+## 🚀 Features
 
-Tech Stack:
-	•	Frontend: React + Next.js + Tailwind CSS
-	•	Backend: Node.js + Express.js (via Vercel Functions)
-	•	Database: Supabase
-	•	Authentication: Entra ID (Azure AD) via MSAL (MSAL.js for frontend, MSAL Node for backend)
-	•	Email Notifications: Microsoft Graph API
-	•	Deployment: Vercel (Frontend + Backend)
+### Core Asset Management
+- **Asset Registration & Tracking**: Complete asset lifecycle management with detailed information including purchase date, cost, current value, condition, and location
+- **Advanced Search & Filtering**: Search assets by multiple criteria including category, location, condition, and assigned personnel
+- **Asset Assignment**: Assign assets to specific users and track ownership history
+- **Condition Monitoring**: Track asset condition with status indicators (excellent, good, fair, poor)
+- **Asset Categories**: Organize assets by categories (IT Equipment, Office Furniture, Vehicles, etc.)
 
-⸻
+### Maintenance Management
+- **Maintenance Scheduling**: Schedule preventive and corrective maintenance activities
+- **Maintenance History**: Complete maintenance records with costs, technician details, and notes
+- **Maintenance Reminders**: Automated email notifications for upcoming maintenance
+- **Status Tracking**: Track maintenance status (scheduled, in-progress, completed, cancelled)
+- **Cost Tracking**: Monitor maintenance costs and generate cost reports
 
-Project Overview
+### User Management & Authentication
+- **Azure AD Integration**: Secure authentication using Microsoft Entra ID (Azure AD)
+- **Role-Based Access Control**: Three-tier access control (Admin, Manager, User)
+- **Single Sign-On (SSO)**: Seamless login experience with enterprise credentials
+- **User Assignment**: Assign assets to specific users and track responsibility
 
-AssetFlow is a modern asset management tool designed for enterprises using Microsoft Entra ID (Azure AD). It allows users to:
-	•	Submit, track, and manage assets
-	•	Implement a multi-step approval workflow
-	•	Receive email notifications for approvals
-	•	Manage users and roles via Entra ID integration
-	•	Maintain a full audit trail of all asset activities
+### Notifications & Communication
+- **Email Notifications**: Automated maintenance reminders via Microsoft Graph API
+- **Real-time Alerts**: In-app notifications for important updates
+- **Maintenance Reminders**: Proactive notifications for scheduled maintenance
 
-This tool is designed for seamless integration with your organization’s existing Microsoft ecosystem.
+### Reporting & Analytics
+- **Dashboard**: Overview of total assets, maintenance activities, and key metrics
+- **Asset Statistics**: Visual charts showing asset distribution by category and condition
+- **Maintenance Reports**: Track maintenance costs, schedules, and completion rates
+- **Export Capabilities**: Export data for external reporting and analysis
 
-⸻
+### Technical Features
+- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
+- **Real-time Data**: Live updates using Supabase real-time subscriptions
+- **File Attachments**: Upload and manage asset documentation and images
+- **Audit Trail**: Complete history of all asset and maintenance activities
+- **Data Security**: Enterprise-grade security with row-level security policies
 
-Features
+## 🛠 Technology Stack
 
-1. Asset Management
-	•	Add, update, or retire assets
-	•	Assign assets to users or departments
-	•	Track asset status and lifecycle (Pending Approval, Approved, Rejected, Retired)
+### Frontend
+- **Framework**: Next.js 14 with React 18
+- **Styling**: Tailwind CSS for responsive design
+- **Authentication**: Azure MSAL (Microsoft Authentication Library)
+- **State Management**: React Query for server state management
+- **UI Components**: Lucide React icons
+- **Forms**: React Hook Form for form handling
 
-2. Approval Workflow
-	•	Multi-step approvals based on:
-	•	Asset type
-	•	Asset value / cost
-	•	Department or location
-	•	Approvers receive email notifications via Microsoft Graph API
-	•	Approval actions:
-	•	Approve
-	•	Reject
-	•	Request changes
-	•	Submitters receive notifications of decisions
+### Backend
+- **Runtime**: Node.js with Express.js
+- **Database**: Supabase (PostgreSQL)
+- **Authentication**: Azure AD integration with MSAL Node
+- **Email Service**: Microsoft Graph API
+- **Logging**: Winston for structured logging
+- **Security**: Helmet, CORS, Rate limiting
+- **Validation**: Express Validator
 
-3. Authentication & Roles
-	•	Single Sign-On with Entra ID
+### Database
+- **Primary Database**: Supabase (PostgreSQL)
+- **Real-time Features**: Supabase real-time subscriptions
+- **Security**: Row Level Security (RLS)
+- **File Storage**: Supabase Storage for asset images and documents
+
+### DevOps & Deployment
+- **Process Management**: PM2 for production deployment
+- **Environment Management**: Docker support
+- **Monitoring**: Structured logging with Winston
+- **Security**: Environment-based configuration
 	•	MSAL.js for frontend authentication
 	•	MSAL Node for backend token validation
 	•	Role-based access using AD groups (Admin, Manager, User)
