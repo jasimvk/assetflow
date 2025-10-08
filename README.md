@@ -5,11 +5,171 @@ A comprehensive enterprise asset management solution built with React/Next.js fr
 ## 🚀 Features
 
 ### Core Asset Management
-- **Asset Registration & Tracking**: Complete asset lifecycle management with detailed information including purchase date, cost, current value, condition, and location
+- **Asset Registration & Tracking**: Complete asset lifecycle management with detailed information including purchas## Authentication Flow
+1. User clicks "Sign in with Microsoft" → MSAL.js hand## Deployment
+
+### Frontend (Vercel)
+1. Connect Gi## Contributing
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/new-feature`)
+3. Commit your changes (`git commit -m 'Add new feature'`)
+4. Push to the branch (`git push origin feature/new-feature`)
+5. Open a Pull Request
+
+---
+
+## Documentation
+- **Main README**: Project overview and setup instructions (this file)
+- **SYSTEM_ACCESS_IMPLEMENTATION.md**: Detailed documentation for System Access module
+- **database/schema.sql**: Complete database schema with RLS policies
+
+---
+
+## Support & Contact
+For issues, questions, or contributions, please:
+- Open an issue on GitHub
+- Submit a pull request
+- Contact the development team
+
+---
+
+## License
+
+MIT License © 2025
+
+---
+
+## Acknowledgments
+- Built with Next.js, Express, and Supabase
+- Azure AD integration for enterprise authentication
+- Microsoft Graph API for email notifications
+- Tailwind CSS for modern UI design
+
+--- Vercel
+2. Configure environment variables in Vercel dashboard:
+   - `NEXT_PUBLIC_MSAL_CLIENT_ID`
+   - `NEXT_PUBLIC_MSAL_TENANT_ID`
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - `NEXT_PUBLIC_API_URL`
+3. Deploy Next.js application
+4. Custom domain configuration (optional)
+
+### Backend (Vercel/PM2)
+1. Deploy Express backend as Vercel Serverless Functions or use PM2
+2. Configure environment variables:
+   - Supabase credentials
+   - Azure AD credentials
+   - Microsoft Graph API credentials
+3. Set up logging and monitoring
+4. Configure CORS for frontend domain
+
+### Database (Supabase)
+1. Create Supabase project
+2. Run schema.sql to create tables
+3. Configure Row Level Security (RLS) policies
+4. Set up real-time subscriptions (optional)
+5. Configure storage buckets for file uploads
+
+---
+
+## Recent Updates
+
+### October 2025 - System Access Management
+- ✅ Added comprehensive System Access Management module
+- ✅ Integrated Forms and Approvals into System Access workflow
+- ✅ Implemented Oracle Fusion ERP access tracking
+- ✅ Added IT asset handover management
+- ✅ Created employee onboarding workflow
+- ✅ Streamlined sidebar navigation (removed separate Forms and Approvals)
+- ✅ Added Time & Attendance integration support
+- ✅ Implemented priority-based request management
+
+---gin
+2. Entra ID validates credentials and returns ID & access tokens
+3. Token sent to backend → verified with MSAL Node
+4. Backend identifies user roles from AD groups
+5. Role-based access applied throughout the app
+
+---
+
+## Key Features by Module
+
+### 📦 Assets Module
+- Create, read, update, delete assets
+- Advanced search and filtering
+- Asset assignment to users
+- Condition tracking and valuation
+- Category and location management
+- Asset history and audit trail
+
+### 👥 System Access Module (NEW - October 2025)
+- **Employee onboarding forms** with complete information capture
+- **System access provisioning** (Network, Email, VPN)
+- **Oracle Fusion ERP access management**:
+  - HR Module: 7 access groups
+  - Finance Module: AP, AR, Finance Manager, DM Finance
+  - Department-specific access
+- **IT asset handover tracking** (Laptop, Desktop, Mobile, Walkie Talkie, SIM Card)
+- **Request approval workflow** with priority levels
+- **Access audit trail** for compliance
+- **Time & Attendance** system integration
+- **Network and email provisioning** automation-ready
+
+### 🔧 Maintenance Module
+- Schedule preventive maintenance
+- Track corrective maintenance
+- Cost tracking and reporting
+- Technician assignment
+- Email reminders via Microsoft Graph API
+- Status tracking
+
+### 👤 Users Module
+- User management with Azure AD sync
+- Role assignment (Admin, Manager, User)
+- Department organization
+- Single Sign-On (SSO)
+
+### 📊 Reports Module
+- Asset statistics and analytics
+- Maintenance cost reports
+- System access reports
+- Export capabilities
+- Visual dashboards
+
+---cost, current value, condition, and location
 - **Advanced Search & Filtering**: Search assets by multiple criteria including category, location, condition, and assigned personnel
 - **Asset Assignment**: Assign assets to specific users and track ownership history
 - **Condition Monitoring**: Track asset condition with status indicators (excellent, good, fair, poor)
 - **Asset Categories**: Organize assets by categories (IT Equipment, Office Furniture, Vehicles, etc.)
+
+### System Access Management (NEW - October 2025)
+- **IT Onboarding & Offboarding**: Streamlined employee onboarding with comprehensive system access provisioning
+- **Employee Information Management**: Track employee ID, name, department, department head, email, and joining date
+- **Oracle Fusion ERP Access Management**: 
+  - HR Module: 7 access groups (HR, Manager, Buyer, Coordinator, Store, Receiver, Requestor)
+  - Finance Module: AP, AR, Finance Manager, DM Finance
+  - Department-specific access control
+- **Network & Email Access**: 
+  - Network login/Windows/VPN provisioning
+  - Email accounts (generic, personal, Entra ID integration)
+  - Email format: f.name@hospital.ae
+- **Time & Attendance**: Integration-ready for biometric and attendance systems
+- **IT Asset Handover**: 
+  - Laptop assignment and tracking
+  - Desktop allocation
+  - Mobile device management (with/without camera)
+  - Walkie talkie assignment
+  - Duty SIM card tracking
+  - IT Admin access provisioning
+  - HR system access
+- **Access Request Workflow**:
+  - Create, view, edit, and track access requests
+  - Approval/rejection workflow with reason tracking
+  - Status tracking (Pending, In Progress, Approved, Rejected)
+  - Priority levels (Low, Medium, High)
+- **Unified Forms & Approvals**: All system access forms and approval workflows consolidated in one module
+- **Access Audit Trail**: Complete history of all access provisioning and modification activities
 
 ### Maintenance Management
 - **Maintenance Scheduling**: Schedule preventive and corrective maintenance activities
@@ -173,39 +333,154 @@ Project Structure
 
 /assetflow
 ├─ frontend/                 # React + Next.js frontend
-│  ├─ components/            # Reusable UI components (Forms, Dashboards)
-│  ├─ pages/                 # Next.js pages (Assets, Approvals, Login)
+│  ├─ components/            # Reusable UI components
+│  │  ├─ Layout.tsx          # Main layout wrapper
+│  │  └─ Sidebar.tsx         # Navigation sidebar
+│  ├─ pages/                 # Next.js pages
+│  │  ├─ index.tsx           # Dashboard
+│  │  ├─ assets.tsx          # Asset management
+│  │  ├─ system-access.tsx   # System access management (NEW)
+│  │  ├─ users.tsx           # User management
+│  │  ├─ reports.tsx         # Reports & analytics
+│  │  ├─ settings.tsx        # Application settings
+│  │  └─ login.tsx           # Authentication page
 │  ├─ context/               # Auth and state management
-│  ├─ utils/                 # MSAL authentication, API helpers
-│  └─ styles/                # Tailwind customizations
+│  │  └─ AuthContext.tsx     # Azure AD auth context
+│  ├─ utils/                 # Utilities
+│  │  └─ supabase.ts         # Supabase client
+│  └─ styles/                # Styling
+│     └─ globals.css         # Global styles with Tailwind
 │
 ├─ backend/                  # Node.js + Express backend
-│  ├─ controllers/           # API logic (assets, approvals)
-│  ├─ models/                # Supabase table models
-│  ├─ routes/                # Express API endpoints
-│  ├─ services/              # Email, approval workflow, Graph API integration
-│  └─ utils/                 # MSAL token validation, helper functions
+│  ├─ src/
+│  │  ├─ routes/             # API endpoints
+│  │  │  ├─ assets.js        # Asset routes
+│  │  │  ├─ systemAccess.js  # System access routes (NEW)
+│  │  │  ├─ auth.js          # Authentication routes
+│  │  │  ├─ users.js         # User routes
+│  │  │  ├─ maintenance.js   # Maintenance routes
+│  │  │  └─ notifications.js # Notification routes
+│  │  ├─ services/           # Business logic
+│  │  │  └─ notificationService.js
+│  │  ├─ middleware/         # Express middleware
+│  │  │  ├─ auth.js          # MSAL token validation
+│  │  │  └─ errorHandler.js  # Error handling
+│  │  ├─ config/             # Configuration
+│  │  │  ├─ azure.js         # Azure AD config
+│  │  │  └─ database.js      # Supabase config
+│  │  ├─ utils/              # Utilities
+│  │  │  └─ logger.js        # Winston logger
+│  │  └─ server.js           # Express app
+│  ├─ logs/                  # Application logs
+│  ├─ ecosystem.config.js    # PM2 configuration
+│  └─ package.json
+│
+├─ database/
+│  └─ schema.sql             # Database schema
 │
 ├─ README.md                 # Project documentation
+├─ SYSTEM_ACCESS_IMPLEMENTATION.md  # System Access feature docs (NEW)
 └─ package.json
 
 
 ⸻
 
-Backend API Endpoints
+## Backend API Endpoints
 
-Endpoint	Method	Description
-/api/assets	GET	Fetch all assets (role-based)
-/api/assets	POST	Submit a new asset request
-/api/assets/:id	PUT	Update asset details
-/api/assets/:id	DELETE	Retire an asset
-/api/assets/:id/approve	POST	Approve/Reject asset
-/api/approvals	GET	Fetch pending approvals for the logged-in user
+### Assets
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| /api/assets | GET | Fetch all assets with filtering |
+| /api/assets/:id | GET | Get single asset details |
+| /api/assets | POST | Create new asset |
+| /api/assets/:id | PUT | Update asset details |
+| /api/assets/:id | DELETE | Delete/retire an asset |
+
+### System Access (NEW)
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| /api/system-access | GET | Fetch all system access requests |
+| /api/system-access/:id | GET | Get single request details |
+| /api/system-access | POST | Create new access request |
+| /api/system-access/:id | PUT | Update access request |
+| /api/system-access/:id | DELETE | Delete access request |
+| /api/system-access/:id/status | PATCH | Update request status |
+| /api/system-access/:id/approve | PATCH | Approve access request |
+| /api/system-access/:id/reject | PATCH | Reject access request |
+
+### Maintenance
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| /api/maintenance | GET | Fetch maintenance records |
+| /api/maintenance/:id | GET | Get maintenance details |
+| /api/maintenance | POST | Create maintenance record |
+| /api/maintenance/:id | PUT | Update maintenance record |
+
+### Users & Authentication
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| /api/users | GET | Fetch all users |
+| /api/auth/login | POST | Azure AD authentication |
+| /api/auth/logout | POST | User logout |
 
 
 ⸻
 
-Approval Workflow
+## Navigation Structure
+
+AssetFlow features a streamlined, role-based navigation:
+
+### Main Navigation (Sidebar)
+1. **Dashboard** - Overview of assets, maintenance, and system access metrics
+2. **Assets** - Complete asset lifecycle management
+3. **System Access** - IT onboarding, access provisioning, forms, and approvals (NEW)
+4. **Users** - User management and role assignment
+5. **Reports** - Analytics and reporting tools
+6. **Settings** - Application configuration
+
+> **Note**: Forms and Approvals have been consolidated into the **System Access** module for better workflow management.
+
+---
+
+## System Access Workflow (NEW)
+
+### New Employee Onboarding Process:
+1. **Request Creation**
+   - HR/Manager creates system access request
+   - Fills in employee details (name, ID, department, email, joining date)
+   - Selects required system access (network, email, Oracle Fusion)
+   - Specifies IT assets needed (laptop, mobile, etc.)
+
+2. **IT Review**
+   - IT Admin reviews request
+   - Verifies asset availability
+   - Checks access requirements
+
+3. **Approval Process**
+   - IT Admin approves/rejects with comments
+   - Priority assignment (High, Medium, Low)
+   - Status tracking (Pending → In Progress → Approved/Rejected)
+
+4. **Provisioning** (Upon Approval)
+   - Network login credentials created
+   - Email account provisioned (f.name@hospital.ae)
+   - Oracle Fusion ERP access granted:
+     - HR Module groups (7 groups)
+     - Finance Module groups (AP, AR, etc.)
+     - Department-specific access
+   - IT assets assigned and tracked
+   - Time & Attendance system setup
+   - ESS User access configured
+
+5. **Notifications**
+   - Request creator notified of status updates
+   - IT Admin receives new request alerts
+   - Department head notified of approval
+   - Complete audit trail maintained
+
+---
+
+## Approval Workflow
 	1.	User submits asset form → Status: Pending Approval
 	2.	Backend identifies approvers based on asset type, cost, or department
 	3.	Emails sent to approvers via Microsoft Graph API
@@ -215,30 +490,75 @@ Approval Workflow
 
 ⸻
 
-Supabase Database Tables (Simplified)
+## Supabase Database Tables
 
-Assets
+### Assets
+| Column | Type | Description |
+|--------|------|-------------|
+| id | UUID | Primary Key |
+| name | VARCHAR(255) | Asset name |
+| category | VARCHAR(100) | Asset category |
+| serial_number | VARCHAR(100) | Unique serial number |
+| location | VARCHAR(255) | Physical location |
+| purchase_date | DATE | Date of purchase |
+| purchase_cost | DECIMAL | Original cost |
+| current_value | DECIMAL | Current value |
+| condition | ENUM | excellent, good, fair, poor |
+| assigned_to | UUID | Foreign key → Users.id |
+| created_at | TIMESTAMP | Auto-generated |
+| updated_at | TIMESTAMP | Auto-updated |
 
-Column	Type	Notes
-id	UUID	Primary Key
-name	String	Asset name
-type	String	Category
-serial_number	String	Optional
-value	Number	Cost/value of asset
-status	Enum	Pending, Approved, Rejected, Retired
-created_by	String	AD user ID
-assigned_to	String	AD user ID (optional)
-created_at	Timestamp	Auto-generated
+### System Access Requests (NEW)
+| Column | Type | Description |
+|--------|------|-------------|
+| id | UUID | Primary Key |
+| employee_id | VARCHAR(50) | Unique employee ID |
+| first_name | VARCHAR(100) | Employee first name |
+| last_name | VARCHAR(100) | Employee last name |
+| email | VARCHAR(255) | Employee email |
+| department | VARCHAR(100) | Department name |
+| department_head | VARCHAR(255) | Department head name |
+| date_of_joining | DATE | Joining date |
+| network_access | BOOLEAN | Network login access |
+| email_access | JSONB | Email access details |
+| oracle_fusion_access | JSONB | ERP access details |
+| ess_user | BOOLEAN | ESS User access |
+| assigned_assets | JSONB | IT assets assigned |
+| status | VARCHAR(50) | pending, approved, rejected, in_progress |
+| priority | VARCHAR(20) | low, medium, high |
+| requested_by | UUID | Foreign key → Users.id |
+| approved_by | UUID | Foreign key → Users.id |
+| approved_at | TIMESTAMP | Approval timestamp |
+| rejection_reason | TEXT | Reason for rejection |
+| notes | TEXT | Additional notes |
+| created_at | TIMESTAMP | Auto-generated |
+| updated_at | TIMESTAMP | Auto-updated |
 
-AssetApprovals
+### Maintenance Records
+| Column | Type | Description |
+|--------|------|-------------|
+| id | UUID | Primary Key |
+| asset_id | UUID | Foreign key → Assets.id |
+| maintenance_type | VARCHAR(100) | Type of maintenance |
+| scheduled_date | TIMESTAMP | Scheduled date |
+| completed_date | TIMESTAMP | Completion date |
+| status | ENUM | scheduled, in_progress, completed, cancelled |
+| cost | DECIMAL | Maintenance cost |
+| technician_name | VARCHAR(255) | Technician name |
+| notes | TEXT | Additional notes |
+| created_at | TIMESTAMP | Auto-generated |
 
-Column	Type	Notes
-id	UUID	Primary Key
-asset_id	UUID	Foreign key → Assets.id
-approver_id	String	AD user ID
-status	Enum	Pending, Approved, Rejected
-comments	Text	Optional
-created_at	Timestamp	Auto-generated
+### Users
+| Column | Type | Description |
+|--------|------|-------------|
+| id | UUID | Primary Key |
+| email | VARCHAR(255) | User email (unique) |
+| name | VARCHAR(255) | Full name |
+| role | ENUM | admin, manager, user |
+| department | VARCHAR(100) | Department |
+| azure_user_id | VARCHAR(255) | Azure AD user ID |
+| created_at | TIMESTAMP | Auto-generated |
+| updated_at | TIMESTAMP | Auto-updated |
 
 
 ⸻

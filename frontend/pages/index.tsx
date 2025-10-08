@@ -3,7 +3,7 @@ import Layout from '../components/Layout';
 import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/router';
 import { getAssets, getMaintenanceRecords, Asset, MaintenanceRecord } from '../utils/supabase';
-import { Package, Calendar, Users, TrendingUp } from 'lucide-react';
+import { Package, Calendar, Users, TrendingUp, UserPlus, Clock } from 'lucide-react';
 
 const Dashboard = () => {
   const { isAuthenticated, loading } = useAuth();
@@ -155,6 +155,20 @@ const Dashboard = () => {
       color: 'text-purple-600',
       bgColor: 'bg-purple-100',
     },
+    {
+      name: 'Pending Access Requests',
+      value: '2',
+      icon: UserPlus,
+      color: 'text-orange-600',
+      bgColor: 'bg-orange-100',
+    },
+    {
+      name: 'Active Users',
+      value: '45',
+      icon: Users,
+      color: 'text-green-600',
+      bgColor: 'bg-green-100',
+    },
   ];
 
   return (
@@ -175,7 +189,7 @@ const Dashboard = () => {
 
       {/* Dashboard Content */}
       <div className="space-y-6">
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {stats.map((stat, index) => (
             <div key={stat.name} className="group relative">
               <div className="bg-white/70 backdrop-blur-sm border border-gray-200/60 rounded-3xl p-6 shadow-sm hover:shadow-lg hover:bg-white/90 transition-all duration-300 group-hover:scale-105">
@@ -205,6 +219,77 @@ const Dashboard = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* System Access Requests Section */}
+        <div className="bg-white/70 backdrop-blur-sm border border-gray-200/60 rounded-3xl p-8 shadow-sm hover:shadow-lg transition-all duration-300">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+              <UserPlus className="h-6 w-6 text-orange-600" />
+              Recent System Access Requests
+            </h3>
+            <a 
+              href="/system-access"
+              className="text-sm text-primary-600 hover:text-primary-700 font-semibold flex items-center gap-1"
+            >
+              View all →
+            </a>
+          </div>
+          <div className="space-y-4">
+            {[
+              {
+                id: '1',
+                employee: 'Ahmed Hassan',
+                department: 'Finance',
+                date: '2025-10-15',
+                status: 'in_progress',
+                systems: 4,
+                assets: 2
+              },
+              {
+                id: '2',
+                employee: 'Fatima Ali',
+                department: 'HR',
+                date: '2025-10-20',
+                status: 'pending',
+                systems: 3,
+                assets: 1
+              }
+            ].map((request) => (
+              <div key={request.id} className="group p-4 rounded-2xl hover:bg-gray-50/80 transition-all duration-200">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-orange-100 to-orange-200 rounded-2xl flex items-center justify-center">
+                      <UserPlus className="h-6 w-6 text-orange-600" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-gray-900 group-hover:text-orange-600 transition-colors">
+                        {request.employee}
+                      </p>
+                      <p className="text-xs text-gray-500 flex items-center">
+                        <span>{request.department}</span>
+                        <span className="mx-2">•</span>
+                        <span>Joining: {new Date(request.date).toLocaleDateString()}</span>
+                      </p>
+                      <p className="text-xs text-gray-400 mt-1">
+                        {request.systems} systems • {request.assets} assets
+                      </p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <span className={`inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full ${
+                      request.status === 'in_progress' 
+                        ? 'bg-blue-100 text-blue-700 border border-blue-200' 
+                        : 'bg-yellow-100 text-yellow-700 border border-yellow-200'
+                    }`}>
+                      <Clock className="h-3 w-3" />
+                      {request.status === 'in_progress' ? 'In Progress' : 'Pending'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className="bg-white/70 backdrop-blur-sm border border-gray-200/60 rounded-3xl p-8 shadow-sm hover:shadow-lg transition-all duration-300">

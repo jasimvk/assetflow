@@ -9,6 +9,7 @@ const maintenanceRoutes = require('./routes/maintenance');
 const userRoutes = require('./routes/users');
 const notificationRoutes = require('./routes/notifications');
 const authRoutes = require('./routes/auth');
+const systemAccessRoutes = require('./routes/system-access');
 const authMiddleware = require('./middleware/auth');
 const errorHandler = require('./middleware/errorHandler');
 const logger = require('./utils/logger');
@@ -56,6 +57,7 @@ app.use('/api/assets', authMiddleware, assetRoutes);
 app.use('/api/maintenance', authMiddleware, maintenanceRoutes);
 app.use('/api/users', authMiddleware, userRoutes);
 app.use('/api/notifications', authMiddleware, notificationRoutes);
+app.use('/api/system-access', authMiddleware, systemAccessRoutes);
 
 // Error handling middleware
 app.use(errorHandler);

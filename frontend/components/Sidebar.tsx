@@ -13,8 +13,7 @@ import {
   Menu,
   Shield,
   Activity,
-  CheckCircle,
-  FileText
+  UserPlus
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -29,8 +28,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const navigation = [
     { name: 'Dashboard', href: '/', icon: Home, color: 'text-blue-600', bgColor: 'bg-blue-100' },
     { name: 'Assets', href: '/assets', icon: Package, color: 'text-emerald-600', bgColor: 'bg-emerald-100' },
-    { name: 'Approvals', href: '/approvals', icon: CheckCircle, color: 'text-indigo-600', bgColor: 'bg-indigo-100' },
-    { name: 'Forms', href: '/forms', icon: FileText, color: 'text-cyan-600', bgColor: 'bg-cyan-100' },
+    { name: 'System Access', href: '/system-access', icon: UserPlus, color: 'text-orange-600', bgColor: 'bg-orange-100' },
     { name: 'Users', href: '/users', icon: Users, color: 'text-purple-600', bgColor: 'bg-purple-100' },
     { name: 'Reports', href: '/reports', icon: BarChart3, color: 'text-pink-600', bgColor: 'bg-pink-100' },
     { name: 'Settings', href: '/settings', icon: Settings, color: 'text-gray-600', bgColor: 'bg-gray-100' },
