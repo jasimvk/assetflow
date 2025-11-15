@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import { UserPlus, Plus, Search, Eye, CheckCircle, Clock, XCircle, Download, Filter, Edit, Trash2 } from 'lucide-react';
+import { systemAccessAPI, usersAPI } from '../utils/api';
 
 interface SystemAccessRequest {
   id: string;
@@ -19,36 +20,36 @@ interface SystemAccessRequest {
 }
 
 const SystemAccessPage = () => {
-  const [requests, setRequests] = useState<SystemAccessRequest[]>([
-    {
-      id: '1',
-      request_number: 'SAR-2025-001',
-      employee_first_name: 'Ahmed',
-      employee_last_name: 'Hassan',
-      employee_id: 'EMP-2025-101',
-      entra_id: 'a.hassan@1hospitality.ae',
-      department: 'Finance',
-      department_head: 'Sarah Johnson',
-      date_of_joining: '2025-10-15',
-      priority: 'high',
-      status: 'in_progress',
-      created_at: '2025-10-07'
-    },
-    {
-      id: '2',
-      request_number: 'SAR-2025-002',
-      employee_first_name: 'Fatima',
-      employee_last_name: 'Ali',
-      employee_id: 'EMP-2025-102',
-      entra_id: 'f.ali@1hospitality.ae',
-      department: 'HR',
-      department_head: 'Mohammed Al-Rashid',
-      date_of_joining: '2025-10-20',
-      priority: 'medium',
-      status: 'pending',
-      created_at: '2025-10-08'
+  const [requests, setRequests] = useState<SystemAccessRequest[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [users, setUsers] = useState<any[]>([]);
+
+  // Load data on component mount
+  useEffect(() => {
+    loadRequests();
+    loadUsers();
+  }, []);
+
+  const loadRequests = async () => {
+    try {
+      setLoading(true);
+      const data = await systemAccessAPI.getAll();
+      setRequests(data || []);
+    } catch (error) {
+      console.error('Error loading system access requests:', error);
+    } finally {
+      setLoading(false);
     }
-  ]);
+  };
+
+  const loadUsers = async () => {
+    try {
+      const data = await usersAPI.getAll();
+      setUsers(data || []);
+    } catch (error) {
+      console.error('Error loading users:', error);
+    }
+  };
 
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -166,27 +167,59 @@ const SystemAccessPage = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    const newRequest: SystemAccessRequest = {
-      id: String(requests.length + 1),
-      request_number: `SAR-2025-${String(requests.length + 1).padStart(3, '0')}`,
-      employee_first_name: formData.employee_first_name,
-      employee_last_name: formData.employee_last_name,
-      employee_id: formData.employee_id,
-      entra_id: formData.entra_id,
-      department: formData.department,
-      department_head: formData.department_head,
-      date_of_joining: formData.date_of_joining,
-      priority: formData.priority,
-      status: 'pending',
-      created_at: new Date().toISOString().split('T')[0],
-      notes: formData.notes
-    };
-    
-    setRequests([...requests, newRequest]);
-    handleCloseModal();
+    try {
+      // Prepare the form data matching the existing formData structure
+      const requestData = {
+        ...formData,
+        status: 'pending' as const
+      };
+
+      const newRequest = await systemAccessAPI.create(requestData);
+      
+      if (newRequest) {
+        setRequests(prev => [...prev, newRequest]);
+        handleCloseModal();
+        alert('System access request created successfully!');
+      }
+    } catch (error) {
+      console.error('Error creating system access request:', error);
+      alert('Failed to create system access request. Please try again.');
+    }
+  };
+
+  const handleApprove = async (requestId: string) => {
+    try {
+      const updated = await systemAccessAPI.updateStatus(requestId, 'approved', 'Request approved');
+      if (updated) {
+        setRequests(prev => 
+          prev.map(req => req.id === requestId ? { ...req, status: 'approved' } : req)
+        );
+        alert('Request approved successfully!');
+      }
+    } catch (error) {
+      console.error('Error approving request:', error);
+      alert('Failed to approve request. Please try again.');
+    }
+  };
+
+  const handleReject = async (requestId: string) => {
+    const reason = prompt('Please provide a reason for rejection:');
+    if (!reason) return;
+
+    try {
+      const updated = await systemAccessAPI.updateStatus(requestId, 'rejected', reason);
+      if (updated) {
+        setRequests(prev => 
+          prev.map(req => req.id === requestId ? { ...req, status: 'rejected' } : req)
+        );
+        alert('Request rejected successfully!');
+      }
+    } catch (error) {
+      console.error('Error rejecting request:', error);
+      alert('Failed to reject request. Please try again.');
+    }
   };
 
   const getStatusColor = (status: string) => {
