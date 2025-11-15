@@ -1,0 +1,190 @@
+name,category,location,purchase_date,purchase_cost,current_value,condition,assigned_to,description
+ONEHVMH2,IT Equipment - Server,HEAD OFFICE,2020-01-01,1000,100.0,fair,,"Model: HP Prolaint GL360 Gen 10  | Serial: CZJ1020F01 |  Xeon 3.00GHz 24CPUs Gold 6248, 64GB RAM, 7.5TB SSD Drive | IP: 192.168.1.95"
+ONEHVMH1,IT Equipment - Server,HEAD OFFICE,2025-02-03,1000,1000.0,excellent,,Model: HP Prolaint GL360 Gen 11 | Serial: CZ2D2507J3 | IP: 192.168.1.89
+ONEHVMH1,IT Equipment - Server,HEAD OFFICE,2020-01-01,1000,100.0,fair,,Model: HP Prolaint GL360 Gen 11 | Serial: CZ2D2507J3 | IP: 192.168.1.88
+1H-FOCUS,IT Equipment - Server,HEAD OFFICE,2020-01-01,1000,100.0,fair,,Model: HP Prolaint GL360 Gen 11 | IP: 192.168.1.87
+ONEH-CHECKSCM,IT Equipment - Server,HEAD OFFICE,2020-01-01,1000,100.0,fair,,Model: HP Prolaint GL360 Gen 11 | IP: 192.168.0.182
+1H-SERVER,IT Equipment - Server,HEAD OFFICE,2020-01-01,1000,100.0,fair,,Model: HP Prolaint GL360 Gen 11 | IP: 192.168.1.89
+ONEHVMH2,IT Equipment - Server,HEAD OFFICE,2020-01-01,1000,100.0,fair,,"Model: HP Prolaint GL360 Gen 10  |  Xeon 3.00GHz 24CPUs Gold 6248, 64GB RAM, 7.5TB SSD Drive | IP: 192.168.1.95"
+ONEH-PDC,IT Equipment - Server,HEAD OFFICE,2020-01-01,1000,100.0,fair,,"Model: HP Prolaint GL360 Gen 10  |  Xeon 3.00GHz 24CPUs Gold 6248, 64GB RAM, 7.5TB SSD Drive | IP: 192.168.1.100"
+OHEH-BACKUP,IT Equipment - Server,HEAD OFFICE,2020-01-01,1000,100.0,fair,,"Model: HP Prolaint GL360 Gen 10  |  Xeon 3.00GHz 24CPUs Gold 6248, 64GB RAM, 7.5TB SSD Drive | IP: 192.168.1.97"
+Switch,IT Equipment - Switch,Head Office,2020-01-01,1000,100.0,fair,,Model: HP 2620-48 POE+Switch J9624J | Serial: CN34DRW029
+Switch,IT Equipment - Switch,Head Office,2020-01-01,1000,100.0,fair,,Model: HP 2620-48 POE+Switch J9624J | Serial: CN33DRW1N0
+Firewall,IT Equipment - Switch,Head Office,2020-01-01,1000,100.0,fair,,Model: SonicWall NSa 2650 | IP: 192.168.1.253
+Access Point,IT Equipment - Switch,Head Office,2020-01-01,1000,100.0,fair,,Model: UniFi AC Pro | IP: 192.168.0.8
+Access Point,IT Equipment - Switch,Head Office,2020-01-01,1000,100.0,fair,,Model: UniFi AC Pro | IP: 192.168.0.246
+Access Point,IT Equipment - Switch,Head Office,2020-01-01,1000,100.0,fair,,Model: UniFi AC Pro | IP: 192.168.1.151
+Access Point,IT Equipment - Switch,Head Office,2020-01-01,1000,100.0,fair,,Model: UniFi AC Pro | IP: 192.168.0.130
+Access Point,IT Equipment - Switch,Head Office,2020-01-01,1000,100.0,fair,,Model: UniFi AC Lite | IP: 192.168.1.161
+Access Point,IT Equipment - Switch,Head Office,2020-01-01,1000,100.0,fair,,Model: UniFi AC Lite | IP: 192.168.0.89
+ONEH-BACKUP,IT Equipment - Storage,Head Office,2020-01-01,1000,100.0,fair,,Model: Synology Ds720+ | Serial:  | IP: 192.168.1.94
+FILESEERVER,IT Equipment - Storage,Head Office,2020-01-01,1000,100.0,fair,,Model: Synology RS1221+ | Serial:  | IP: 192.168.1.98
+DS720,IT Equipment - Storage,Head Office,2020-01-01,1000,100.0,fair,,Model: Synology Ds720+ | Serial:  | IP: 192.168.1.99
+DESKTOP-SHENNA,IT Equipment - Laptop,Head Office,2023-04-01,1000,600.0,good,,Model: Lenovo ThinkPad E14 Gen4 | Serial: PF4C34HG
+DESKTOP-NIKHIL,IT Equipment - Laptop,Head Office,2023-08-05,1000,600.0,good,,Model: Lenovo ThinkPad E15 Gen 4 | Serial: PF4F0836
+DESKTOP-Victoria,IT Equipment - Laptop,HEAD OFFICE,2024-01-06,1000,800.0,excellent,,Model: Lenovo ThinkPad T14s Gen 5 | Serial: PF4YYTSS
+LAPTOP-MURROR-K,IT Equipment - Laptop,Murror Kitchen,2022-01-04,1000,400.0,good,,Model: Lenovo ThinkPad E15 Gen 2 | Serial: PF3FWSQC
+ONEH-SECURITY-SVE,IT Equipment - Laptop,SPANISH VILLA,2019-06-09,1000,100.0,poor,,Model: HP - HP ProBook 440 G6 | Serial: 5CD9229NMV
+ONEH-RYAN,IT Equipment - Laptop,MAIN STORE,2018-01-04,1000,100.0,poor,,Model: Lenovo ThinkPad E580 | Serial: PF0Y6NKH
+DESKTOP-Maneesh,IT Equipment - Laptop,HEAD OFFICE,2024-01-06,1000,800.0,excellent,,Model: Lenovo ThinkPad E14 | Serial: PF4YY2PW
+DESKTOP-BRAYAN FLIX,IT Equipment - Laptop,Main Office,2021-01-08,1000,200.0,fair,,Model: Lenovo ThinkPad E15 | Serial: PF2PB0BM
+ONEH-IULIANA,IT Equipment - Laptop,Head Office,2024-03-17,1000,800.0,excellent,,Model: Dell Inc. - XPS 15 9530 | Serial: C57W824
+DESKTOP-RODRIGO,IT Equipment - Laptop,SPANISH VILLA,2023-01-04,1000,600.0,good,,Model: Lenovo ThinkPad E14 Gen 4 | Serial: PF4C31X0
+ONEH-AMBER,IT Equipment - Laptop,Head Office,2022-01-06,1000,400.0,good,,Model: LENOVO THINKPAD E15 GEN1 | Serial: PF3R7VF5
+DESKTOP-MESUD,IT Equipment - Laptop,Head Office,2024-01-05,1000,800.0,excellent,,Model: LENOVO THINKPAD E15 GEN1 | Serial: PF4JX9LA
+Jennys-MacBook-Pro,IT Equipment - Laptop,Head Office,2024-06-01,1000,800.0,excellent,,"Model: Mac15,3 | Serial: YTV0R66XPH"
+ONEH-RASHEED,IT Equipment - Laptop,SPANISH VILLA,2024-01-20,1000,800.0,excellent,,Model: Dell Inc. - XPS 15 9530 | Serial: 626MBY3
+DESKTOP-GNL5E3H,IT Equipment - Laptop,White Villa,2023-11-01,1000,600.0,good,,Model: LENOVO THINKPAD E16 GEN1 | Serial: PF4JX50S
+DESKTOP-L7TG6V1,IT Equipment - Laptop,Head Office,2020-01-01,1000,100.0,fair,,Model: Microsoft surface Book 3 | Serial: 15850212154
+ONEH-SANDALI,IT Equipment - Laptop,Head Office,2021-03-01,1000,200.0,fair,,Model: Lenovo ThinkPad E15 | Serial: PF2MDMWP
+ONEH-Mutya,IT Equipment - Laptop,Head Office,2024-01-31,1000,800.0,excellent,,Model: HP - HP Laptop 15-dw0xxx | Serial: CND9450CB8
+DESKTOP-9SE3UD1,IT Equipment - Laptop,MUROOR KITCHEN,2020-01-01,1000,100.0,fair,,Model: Microsoft Surface Pro | Serial: 16789414745
+ONEH-SURESH-ALA,IT Equipment - Laptop,AL RAWDA VILLA,2020-12-04,1000,100.0,fair,,Model: HP - HP ProBook 440 G7 | Serial: 5CD048LR8R
+LAPTOP-SVE-HKE,IT Equipment - Laptop,SPANISH VILLA,2020-03-14,1000,100.0,fair,,Model: HP - HP Laptop 15-da2xxx | Serial: CND009296N
+DESKTOP-ALRAKNA,IT Equipment - Laptop,AL RAKHNA VILLA,2020-01-01,1000,100.0,fair,,Model: HP 250 G7 | Serial: CNDO3624ZT
+ONEH-FEMALE-SEC,IT Equipment - Laptop,LADIES STAFF ACCOMMODATION,2020-08-25,1000,100.0,fair,,Model: HP - HP Laptop 15-da2xxx | Serial: CND0336J4D
+Laptop,IT Equipment - Laptop,Head Office,2020-12-04,1000,100.0,fair,,Model: HP ProBook 450 G7 | Serial: 5CD0493H2B
+ONEH-SHECILL,IT Equipment - Laptop,White Villa,2025-10-01,1000,1000.0,excellent,,Model: Lenovo ThinkPad E14 GEN 4 | Serial: PF44JFV5
+ONEH-BIBEK,IT Equipment - Laptop,Head Office,2025-10-01,1000,1000.0,excellent,,Model: Lenovo ThinkPad E14 | Serial: PF44D4NE
+Laptop,IT Equipment - Laptop,Head Office,2023-04-01,1000,600.0,good,,Model: MacBook Pro M2 | Serial: PQF7R1XKQQ
+ONEH-SALIM,IT Equipment - Laptop,Main Office,2025-01-01,1000,1000.0,excellent,,Model: Lenovo ThinkPad X12 | Serial: PW0E2X7E
+LAPTOP-CRISTINA,IT Equipment - Laptop,Head Office,2022-06-01,1000,400.0,good,,Model: Lenovo ThinkPad E14 | Serial: PF3W70L9
+LAPTOP-HK-ALYAS,IT Equipment - Laptop,AL YASAT,2020-03-14,1000,100.0,fair,,Model: HP - HP Laptop 15-da2xxx | Serial: CND009294H
+LAPTOP-SVE-HK,IT Equipment - Laptop,SPANISH VILLA,2020-11-23,1000,100.0,fair,,Model: HP - HP ProBook 440 G7 | Serial: 5CD04794MQ
+ONEH-ADINA,IT Equipment - Laptop,Head Office,2023-05-19,1000,600.0,good,,Model: Dell Inc. - XPS 15 9520 | Serial: 67LFTV3
+ONEH-AKBAR-LAP,IT Equipment - Laptop,Main Office,2025-03-01,1000,1000.0,excellent,,Model: Lenovo ThinkPad T14s Gen 5 | Serial: GM0VWYSA
+ONEH-BABU,IT Equipment - Laptop,Head Office,2023-05-19,1000,600.0,good,,Model: Dell Inc. - XPS 15 9520 | Serial: IT9GTV3
+ONEH-BAIJU,IT Equipment - Laptop,Head Office,2023-03-01,1000,600.0,good,,Model: Lenovo E14 Gen4 | Serial: PF4AKJEC
+ONEH-DEEPAK-LAP,IT Equipment - Laptop,Main Office,2022-06-29,1000,400.0,good,,Model: Lenovo ThinkPad E15 Gen 4 | Serial: PF3RK7W8
+ONEH-DISHA-LAP,IT Equipment - Laptop,Head Office,2020-01-01,1000,100.0,fair,,Model: Microsoft Corporation - Surface Laptop 5 | Serial: 0F000WZ23233FB
+ONEH-DURGA,IT Equipment - Laptop,HEAD OFFICE,2022-06-18,1000,400.0,good,,Model: Lenovo ThinkPad E15 Gen 4  | Serial: PF3XCW6T
+ONEH-EYAD-LAP,IT Equipment - Laptop,Head Office,2020-01-01,1000,100.0,fair,,Model: Microsoft Corporation - Surface Laptop 5 | Serial: 0F00STM23213FB
+ONEH-FLORY,IT Equipment - Laptop,Main Office,2025-02-04,1000,1000.0,excellent,,Model: Lenovo ThinkPad X12 | Serial: PW0E2X7K
+ONEH-HTET,IT Equipment - Laptop,Main Office,2025-03-01,1000,1000.0,excellent,,Model: Lenovo ThinkPad X12 | Serial: PW0E2X7F
+ONEH-HTET-LAP,IT Equipment - Laptop,Head Office,2023-09-16,1000,600.0,good,,Model: LENOVO THINKPAD E16 GEN1 | Serial: PF4HHHYP
+ONEH-ELDHO,IT Equipment - Laptop,Head Office,2023-06-30,1000,600.0,good,,Model: LENOVO THINKPAD E15 GEN 4 | Serial: PF4EL6CK
+ONEH-ITTY-LAP,IT Equipment - Laptop,Head Office,2022-06-29,1000,400.0,good,,Model: Lenovo ThinkPad E15 Gen4 | Serial: PF3RKCDM
+ONEH-OSHBAH,IT Equipment - Laptop,Head Office,2024-03-31,1000,800.0,excellent,,Model: HP - HP ProBook 450 G5 | Serial: 5CD815723K
+ONEH-NARESH,IT Equipment - Laptop,Head Office,2022-06-29,1000,400.0,good,,Model: Lenovo ThinkPad E15 Gen4 | Serial: PF3RPZCZ
+ONEH-MARAH-PA,IT Equipment - Laptop,HEAD OFFICE,2020-01-01,1000,100.0,fair,,Model: Microsoft Corporation - Surface Laptop 5 | Serial: BK33VM824013BF
+ONEH-MARJULYN,IT Equipment - Laptop,WHITE VILLA,2021-12-15,1000,200.0,fair,,Model: Lenovo ThinkPad E14 | Serial: PF3CBPTC
+ONEH-JOBELLE,IT Equipment - Laptop,Head Office,2024-05-31,1000,800.0,excellent,,Model: LENOVO THINKPAD E14 GEN 5 | Serial: PF4YY4XF
+ONEH-PRINCE,IT Equipment - Laptop,Main Office,2021-03-30,1000,200.0,fair,,Model: Lenovo ThinkPad E15 | Serial: PF2MDPHX
+ONEH-REGIENALD,IT Equipment - Laptop,SAI SALAAMÂ,2021-05-19,1000,200.0,fair,,Model: Lenovo ThinkPad E15 | Serial: PF2M1X3Q
+ONEH-RUBIN-THOM,IT Equipment - Laptop,MUROOR KITCHEN,2025-03-01,1000,1000.0,excellent,,Model: Lenovo ThinkPad T14s Gen 5 | Serial: GM0VWYRH
+ONEH-RUEL,IT Equipment - Laptop,Main Office,2025-03-01,1000,1000.0,excellent,,Model: Lenovo ThinkPad T14s Gen 5 | Serial: GM0VWYRA
+ONEH-SEZIM,IT Equipment - Laptop,SPANISH VILLA,2023-09-16,1000,600.0,good,,Model: LENOVO THINKPAD E16 GEN1-I7 | Serial: PF4HWANM
+ONEH-ASHOK,IT Equipment - Laptop,SPANISH VILLA,2018-04-05,1000,100.0,poor,,Model: Lenovo ThinkPad E580 | Serial: PF0Y6NH7
+ONEH-SOURIA,IT Equipment - Laptop,Main Office,2024-03-17,1000,800.0,excellent,,Model: Dell XPS 15 9520  | Serial: 4SXV824
+ONEH-THIDA,IT Equipment - Laptop,SPANISH VILLA,2024-06-17,1000,800.0,excellent,,Model: LENOVO THINKPAD E14 GEN 5 | Serial: PF514MGZ
+ONEH-ALRAKNA-HK,IT Equipment - Laptop,AlRakna,2022-11-26,1000,400.0,good,,Model: Lenovo ThinkPad E15 Gen4 | Serial: PF436LH6
+ONEH-YONALI,IT Equipment - Laptop,SAADIYAT VILLA 43,2021-11-22,1000,200.0,fair,,Model: HP - HP ProBook 440 G7 | Serial: 5CD04794P4
+TABLET-QQKSFJ1I,IT Equipment - Laptop,Head Office,2020-01-01,1000,100.0,fair,,Model: Microsoft Corporation - Surface Pro 7+ | Serial: 16789414853
+Varynias-MacBook-Pro,IT Equipment - Laptop,Main Office,2025-02-01,1000,1000.0,excellent,,Model: Macbook Pro M4 | Serial: K7QN39Y343
+DESKTOP-VARYNIA,IT Equipment - Laptop,Head Office,2022-10-24,1000,400.0,good,,Model: Lenovo ThinkPad T14s Gen 5 | Serial: PF44DK6D
+ONEH-JULIENE-LA,IT Equipment - Laptop,Head Office,2025-01-01,1000,1000.0,excellent,,Model: Lenovo ThinkPad T14s Gen 5 | Serial: GM0VWYRT
+ONEH-WALUKA-LAP,IT Equipment - Laptop,Head Office,2025-01-01,1000,1000.0,excellent,,Model: Lenovo ThinkPad T14s Gen 5 | Serial: GM0VWYSP
+ONEH-IRFAN,IT Equipment - Laptop,Head Office,2025-01-01,1000,1000.0,excellent,,Model: Lenovo ThinkPad T14s Gen 5 | Serial: GM0VWYS8
+ONEH-VISAL-LAP,IT Equipment - Laptop,Head Office,2025-01-01,1000,1000.0,excellent,,Model: Lenovo ThinkPad T14s Gen 5 | Serial: GM0VWYR6
+ONEH-LOVIN,IT Equipment - Laptop,Kitchen,2025-01-01,1000,1000.0,excellent,,Model: Lenovo ThinkPad T14s Gen 5 | Serial: GM0VWYRJ
+ONEH-SURRENDRA,IT Equipment - Laptop,To be verified,2020-12-04,1000,100.0,fair,,Model: HP - HP ProBook 440 G7 | Serial: 5CD048LR8T
+LAPTOP-WVE-HK,IT Equipment - Laptop,White Villa,2022-04-22,1000,400.0,good,,Model: Lenovo Thinkpad Laptop E15 Gen2 | Serial: PF3FFN1H
+ONEH-SHOVA,IT Equipment - Laptop,SAADIYAT VILLA,2023-01-31,1000,600.0,good,,Model: HP - HP Laptop 15-dw0xxx | Serial: CND9416RJV
+ONEH-SECURITY-YASAT,IT Equipment - Laptop,AL YASAT,2021-11-21,1000,200.0,fair,,Model: HP - HP 250 G8 Notebook PC | Serial: CND1405WN7
+ONEH-MURTI,IT Equipment - Laptop,Head Office,2025-01-01,1000,1000.0,excellent,,Model: Lenovo ThinkPad T14s Gen 5 | Serial: GM0VWYSQ
+ONEH-LUCY-LAP,IT Equipment - Laptop,Head Office,2025-01-01,1000,1000.0,excellent,,Model: Lenovo ThinkPad T14s Gen 5 | Serial: GM0VWYS2
+ONEH-NASIF,IT Equipment - Laptop,Head Office,2025-01-01,1000,1000.0,excellent,,Model: Lenovo ThinkPad T14s Gen 5 | Serial: GM0VWYR5
+ONEH-GOBINDA,IT Equipment - Laptop,Head Office,2025-01-01,1000,1000.0,excellent,,Model: Lenovo ThinkPad T14s Gen 5 | Serial: GM0VWYRE
+Laptop,IT Equipment - Laptop,M1,2020-01-01,1000,100.0,fair,,Model: LENOVO THINKPAD E16 GEN1 | Serial: PF4HWA6S
+DESKTOP-4L0TNA2,IT Equipment - Laptop,M1,2023-04-30,1000,600.0,good,,Model: HP Notebook 15 | Serial: CND92204RS
+Laptop,IT Equipment - Laptop,Head Office,2022-01-14,1000,400.0,good,,Model: HP ENVY x360 | Serial: CND1352D4X
+Laptop,IT Equipment - Laptop,Head Office,2015-09-12,1000,100.0,poor,,Model: Dell Inspiron 5558 | Serial: GD9QY52
+IT-Admin,IT Equipment - Laptop,Main Office,2017-07-22,1000,100.0,poor,,Model: Lenovo ThinkPad T570 | Serial: R90NMD78
+Laptop,IT Equipment - Laptop,WHITE VILLA,2025-04-01,1000,1000.0,excellent,,Model: Lenovo Thinkpad Laptop E15 Gen2 | Serial: PF3FFN1K
+DESKTOP-ALRAKNA,IT Equipment - Laptop,AL RAKHNA VILLA,2020-09-08,1000,100.0,fair,,Model: HP - HP 250 G7 Notebook PC | Serial: CND03624ZT
+ONEH-RANJEET,IT Equipment - Desktop,Head Office,2023-10-19,1000,600.0,good,,Model: HP - HP Pro Tower 290 G9 Desktop PC | Serial: 4CE323CR0Q
+ONEH-SUNITA,IT Equipment - Desktop,Head Office,2023-11-14,1000,600.0,good,,Model: HP - HP Pro Tower 290 G9 Desktop PC | Serial: 4CE334D27Y
+ONEH-MARIAM,IT Equipment - Desktop,Head Office,2023-11-15,1000,600.0,good,,Model: HP - HP Pro Tower 290 G9 Desktop PC | Serial: 4CE334D25V
+ONEH-KLAITHEM,IT Equipment - Desktop,Head Office,2023-11-14,1000,600.0,good,,Model: HP - HP Pro Tower 290 G9 Desktop PC | Serial: 4CE334D214
+ONEH-ANGELA,IT Equipment - Desktop,Head Office,2022-03-31,1000,400.0,good,,Model: HP - HP ProDesk 400 G7 Microtower PC | Serial: 4CE202CCMY
+ONEH-FARAH,IT Equipment - Desktop,Head Office,2021-12-29,1000,200.0,fair,,Model: HP - HP 290 G4 Microtower PC | Serial: 4CE142B9RK
+ONEH-MAHMOOD,IT Equipment - Desktop,Head Office,2021-02-08,1000,200.0,fair,,Model: HP - HP ProDesk 400 G7 Microtower PC | Serial: CZC1058FS0
+DESKTOP-GAYAN,IT Equipment - Desktop,MAIN STORE,2021-02-02,1000,200.0,fair,,Model: HP - HP ProDesk 400 G7 Microtower PC | Serial: CZC10471XX
+DESKTOP-LOGISTI,IT Equipment - Desktop,MAIN STORE,2020-02-27,1000,100.0,fair,,Model: HP - HP ProDesk 400 G6 MT | Serial: 4CE95127SC
+DESKTOP-Security Gate HO,IT Equipment - Desktop,Head Office,2021-08-22,1000,200.0,fair,,Model: HP - HP 290 G4 Microtower PC | Serial: 4CE124X5F0
+DESKTOP-ALRAKNA,IT Equipment - Desktop,ALRAKNA,2021-08-22,1000,200.0,fair,,Model: HP - HP 290 G4 Microtower PC | Serial: 4CE124X56D
+DESKTOP-ILDS3T1,IT Equipment - Desktop,MAIN STORE,2021-08-22,1000,200.0,fair,,Model: HP - HP 290 G4 Microtower PC | Serial: 4CE124X57G
+Desktop,IT Equipment - Desktop,WHITE VILLA,2019-03-19,1000,100.0,poor,,Model: HP ProDesk 400 G5 Microtower PC | Serial: 4CE9091SJC
+DESKTOP-SAADIYA-VILLA7,IT Equipment - Desktop,SAADIYAT VILLA 7,2019-06-29,1000,100.0,poor,,Model: HP ProDesk 400 G5 Microtower PC | Serial: 4CE9261LKM
+SVE-HK-EXTERIOR,IT Equipment - Desktop,SPANISH VILLA,2017-12-12,1000,100.0,poor,,Model: Dell Inc. - OptiPlex 7050 | Serial: G3P9TJ2
+ONEH-ALANOOD,IT Equipment - Desktop,Head Office,2021-07-29,1000,200.0,fair,,Model: HP - HP ProDesk 400 G7 Microtower PC | Serial: CZC1249Z9F
+ONEH-WVE-INTERI,IT Equipment - Desktop,WHITE VILLA,2025-02-10,1000,1000.0,excellent,,Model: Lenovo ThinkCentre M70q G4 | Serial: GM0N9B25
+ONEH-WVE-EXT,IT Equipment - Desktop,WHITE VILLA,2025-02-10,1000,1000.0,excellent,,Model: Lenovo ThinkCentre M70q G4 | Serial: GM0N9B24
+ONEH-MIJO,IT Equipment - Desktop,Main Office,2025-02-10,1000,1000.0,excellent,,Model: Lenovo ThinkCentre M70q G4 | Serial: GM0N9B2W
+ONEH-SREEJITH,IT Equipment - Desktop,Main Office,2025-02-10,1000,1000.0,excellent,,Model: Lenovo ThinkCentre M70q G4 | Serial: GM0N9B2D
+DESKTOP-ANNALIZA,IT Equipment - Desktop,BARARI VILLA 1504,2019-04-16,1000,100.0,poor,,Model: HP - HP 290 G2 MT Business PC | Serial: 8CG915BY3Q
+DESKTOP-ANSAR,IT Equipment - Desktop,Store,2014-10-26,1000,100.0,poor,,Model: Hewlett-Packard - HP ProDesk 400 G1 SFF | Serial: CZC4393PXN
+QURAMKITCHEN,IT Equipment - Desktop,MUROOR KITCHEN,2020-02-26,1000,100.0,fair,,Model: HP - HP ProDesk 400 G6 MT | Serial: CZC008DFTX
+DESKTOP-JIO,IT Equipment - Desktop,WATHBA KITCHEN,2024-01-11,1000,800.0,excellent,,Model: HP - HP Pro Tower 290 G9 Desktop PC | Serial: 4CE335BY51
+DESKTOP-WKITCHEN,IT Equipment - Desktop,WATHBA KITCHEN,2024-12-03,1000,800.0,excellent,,Model: HP - HP Pro SFF 290 G9 Desktop PC | Serial: 4CE345DKNY
+ONEH-SHAFI,IT Equipment - Desktop,HEAD OFFICE,2019-05-29,1000,100.0,poor,,Model: HP - HP ProDesk 400 G5 MT IDS APJ | Serial: 4CE8361N15
+DESKTOP-DORI,IT Equipment - Desktop,WATHBA KITCHEN,2024-12-03,1000,800.0,excellent,,Model: HP - HP Pro SFF 290 G9 Desktop PC | Serial: 4CE345DKN8
+1H-Babu,IT Equipment - Desktop,Main Office,2025-05-01,1000,1000.0,excellent,,Model: HOT_Systems - HOT Ultra 9   | Serial: 20250122084
+SVE-HK-INTERIOR,IT Equipment - Desktop,SPANISH VILLA,2025-02-10,1000,1000.0,excellent,,Model: Lenovo ThinkCentre M70q G4 | Serial: GM0N9B2B
+DESKTOP-SYV-HK,IT Equipment - Desktop,SAADIYAT VILLA 7,2025-02-10,1000,1000.0,excellent,,Model: Lenovo ThinkCentre M70q G4 | Serial: GM0N9B1L
+ONEH-SVE-FNB,IT Equipment - Desktop,SPANISH VILLA,2025-02-10,1000,1000.0,excellent,,Model: Lenovo ThinkCentre M70q G4 | Serial: GM0N9B2L
+ONEH-HASNA-DESK,IT Equipment - Desktop,Head Office,2025-02-10,1000,1000.0,excellent,,Model: Lenovo ThinkCentre M70q G4 | Serial: GM0N9B1R
+WVE-HK-INTERIOR,IT Equipment - Desktop,WHITE VILLA,2025-02-10,1000,1000.0,excellent,,Model: Lenovo ThinkCentre M70q G4 | Serial: GM0N9B22
+DESKTOP-KITCHEN-YASAT,IT Equipment - Desktop,YASAT,2020-01-01,1000,100.0,fair,,Model: HP -  HP EliteDesk 800 G6 Tower PC | Serial: 4CE151DSTN
+Desktop,IT Equipment - Desktop,Head Office,2018-07-24,1000,100.0,poor,,Model: HP 290 G4 MT | Serial: 8CG8293SPK
+Desktop,IT Equipment - Desktop,Head Office,2020-01-01,1000,100.0,fair,,Model: HP ProDesk 400 G1 | Serial: CZC5071QJP
+Desktop,IT Equipment - Desktop,Head Office,2018-09-25,1000,100.0,poor,,Model: Dell Optiplex 3050 | Serial: CBK2CL2
+Desktop,IT Equipment - Desktop,Head Office,2019-04-16,1000,100.0,poor,,Model: HP 290 G7 MT | Serial: 8CG915LGFC
+Desktop,IT Equipment - Desktop,BARARI VILLA 1009,2019-03-29,1000,100.0,poor,,Model: HP 290 G2 MT | Serial: 8CG9133R53
+Desktop,IT Equipment - Desktop,Head Office,2016-09-14,1000,100.0,poor,,Model: Dell Optiplex 7040 | Serial: DJ990C2
+Desktop,IT Equipment - Desktop,Head Office,2019-04-16,1000,100.0,poor,,Model: HP 280 G4 MT | Serial: 8CG915LGFR
+Desktop,IT Equipment - Desktop,Head Office,2014-10-23,1000,100.0,poor,,Model: Dell Optiplex 3020 | Serial: 3S4X132
+Desktop,IT Equipment - Desktop,Head Office,2020-01-01,1000,100.0,fair,,Model: Dell Optiplex 990 | Serial: FQ12D2S
+Desktop,IT Equipment - Desktop,Head Office,2022-11-21,1000,400.0,good,,Model: HP ProDesk 400G7 MT | Serial: 4CE208CHHP
+Desktop,IT Equipment - Desktop,Head Office,2021-04-28,1000,200.0,fair,,Model: HP ProDesk 400G7 MT | Serial: CZC10472C4
+Desktop,IT Equipment - Desktop,Head Office,2019-06-28,1000,100.0,poor,,Model: HP ProDesk 400 G5 MT | Serial: 4CE9261H8V
+ONEH-HASNA,IT Equipment - Desktop,Head Office,2019-03-29,1000,100.0,poor,,Model: HP - HP 290 G2 MT Business PC | Serial: 8CG9133R4X
+RESIGNED,IT Equipment - Mobile,Unknown,2020-01-01,1000,100.0,fair,,Serial: 
+Tablet,IT Equipment - Tablet,Head Office,2020-01-01,1000,100.0,fair,,Model: iPad Pro 11-inch (M4) Wi-Fi - 512GB | Serial: 
+Mouse,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Logitech M196 | Serial: 
+Mouse,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Logitech M196 | Serial: 
+Mouse,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Logitech M196 | Serial: 
+Mouse,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Logitech M196 | Serial: 
+Mouse,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Logitech M196 | Serial: 
+Mouse,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Logitech M196 | Serial: 
+Mouse,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Logitech M196 | Serial: 
+Mouse,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Logitech M196 | Serial: 
+Mouse,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Logitech M196 | Serial: 
+Mouse,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Logitech M196 | Serial: 
+Mouse,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Logitech M196 | Serial: 
+Mouse,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Logitech M196 | Serial: 
+Mouse,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Logitech M196 | Serial: 
+Mouse,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Logitech M196 | Serial: 
+Mouse,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Logitech M196 | Serial: 
+Mouse,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Logitech M90 | Serial: 
+Mouse,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Logitech M90 | Serial: 
+Mouse,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Logitech M90 | Serial: 
+Combo,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Logitech Combo MK295 | Serial: 
+Combo,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Logitech Combo MK295 | Serial: 
+Combo,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Logitech Combo MK295 | Serial: 
+Combo,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Logitech Combo MK295 | Serial: 
+Combo,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Logitech Combo MK295 | Serial: 
+HDMI,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: MOWSIL HDMI Cable - 1M | Serial: 
+HDMI,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: MOWSIL HDMI Cable - 1M | Serial: 
+HDMI,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: MOWSIL HDMI Cable - 1M | Serial: 
+HDMI,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: MOWSIL HDMI Cable - 1M | Serial: 
+HDMI,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: MOWSIL HDMI Cable - 1M | Serial: 
+Data Cable,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Mars MCA1000 | Serial: 
+Data Cable,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Mars MCA1000 | Serial: 
+Data Cable,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Mars MCA1000 | Serial: 
+Data Cable,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Mars MCA1000 | Serial: 
+Data Cable,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Mars MCA1000 | Serial: 
+Adapter,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Heatz ZA34 Power Adapter 18W | Serial: 
+Adapter,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Heatz ZA34 Power Adapter 18W | Serial: 
+Adapter,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Heatz ZA34 Power Adapter 18W | Serial: 
+Adapter,IT Equipment - Peripherals,Unknown,2025-01-01,1000,1000.0,excellent,,Model: Heatz ZA34 Power Adapter 18W | Serial: 
