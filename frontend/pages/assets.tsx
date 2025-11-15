@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import { Package, Plus, Search, Edit, Trash2, X, Save } from 'lucide-react';
+import { assetsAPI, categoriesAPI, locationsAPI, usersAPI } from '../utils/api';
 
 interface Asset {
   id: string;
@@ -16,50 +17,65 @@ interface Asset {
 }
 
 const Assets = () => {
-  const [assets, setAssets] = useState<Asset[]>([
-    {
-      id: '1',
-      name: 'MacBook Pro 16"',
-      category: 'IT Equipment',
-      location: 'Office - Floor 1',
-      current_value: 2500,
-      condition: 'excellent',
-      purchase_date: '2023-01-15',
-      purchase_cost: 3000,
-      assigned_to: 'John Doe',
-      description: 'High-performance laptop for development'
-    },
-    {
-      id: '2',
-      name: 'Standing Desk',
-      category: 'Office Furniture',
-      location: 'Office - Floor 2',
-      current_value: 800,
-      condition: 'good',
-      purchase_date: '2023-02-20',
-      purchase_cost: 1000,
-      assigned_to: 'Jane Smith',
-      description: 'Adjustable height standing desk'
-    },
-    {
-      id: '3',
-      name: 'Conference Table',
-      category: 'Office Furniture',
-      location: 'Meeting Room A',
-      current_value: 1200,
-      condition: 'excellent',
-      purchase_date: '2023-03-10',
-      purchase_cost: 1500,
-      assigned_to: null,
-      description: 'Large conference table for 12 people'
-    }
-  ]);
-
+  const [assets, setAssets] = useState<Asset[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [locations, setLocations] = useState<string[]>([]);
+  const [users, setUsers] = useState<any[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterCategory, setFilterCategory] = useState('all');
   const [filterLocation, setFilterLocation] = useState('all');
   const [editingAsset, setEditingAsset] = useState<Asset | null>(null);
+
+  // Load initial data
+  useEffect(() => {
+    loadAssets();
+    loadCategories();
+    loadLocations();
+    loadUsers();
+  }, []);
+
+  const loadAssets = async () => {
+    try {
+      setLoading(true);
+      const data = await assetsAPI.getAll();
+      setAssets(data || []);
+    } catch (error) {
+      console.error('Error loading assets:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadCategories = async () => {
+    try {
+      const data = await categoriesAPI.getAll();
+      setCategories(data?.map(c => c.name) || ['IT Equipment', 'Office Furniture', 'Vehicles', 'Tools', 'Other']);
+    } catch (error) {
+      console.error('Error loading categories:', error);
+      setCategories(['IT Equipment', 'Office Furniture', 'Vehicles', 'Tools', 'Other']);
+    }
+  };
+
+  const loadLocations = async () => {
+    try {
+      const data = await locationsAPI.getAll();
+      setLocations(data?.map(l => l.name) || ['Office - Floor 1', 'Office - Floor 2', 'Warehouse']);
+    } catch (error) {
+      console.error('Error loading locations:', error);
+      setLocations(['Office - Floor 1', 'Office - Floor 2', 'Warehouse']);
+    }
+  };
+
+  const loadUsers = async () => {
+    try {
+      const data = await usersAPI.getAll();
+      setUsers(data || []);
+    } catch (error) {
+      console.error('Error loading users:', error);
+    }
+  };
   
   const [formData, setFormData] = useState<Partial<Asset>>({
     name: '',
@@ -72,9 +88,6 @@ const Assets = () => {
     assigned_to: '',
     description: ''
   });
-
-  const categories = ['IT Equipment', 'Office Furniture', 'Vehicles', 'Tools', 'Other'];
-  const locations = ['Office - Floor 1', 'Office - Floor 2', 'Meeting Room A', 'Server Room', 'Warehouse'];
 
   const handleOpenModal = (asset?: Asset) => {
     if (asset) {
@@ -121,39 +134,43 @@ const Assets = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (editingAsset) {
-      // Update existing asset
-      setAssets(prev => prev.map(asset => 
-        asset.id === editingAsset.id 
-          ? { ...asset, ...formData } as Asset
-          : asset
-      ));
-    } else {
-      // Add new asset
-      const newAsset: Asset = {
-        id: (assets.length + 1).toString(),
-        name: formData.name || '',
-        category: formData.category || 'IT Equipment',
-        location: formData.location || 'Office - Floor 1',
-        current_value: formData.current_value || 0,
-        condition: formData.condition || 'excellent',
-        purchase_date: formData.purchase_date || new Date().toISOString().split('T')[0],
-        purchase_cost: formData.purchase_cost || 0,
-        assigned_to: formData.assigned_to || null,
-        description: formData.description || ''
-      };
-      setAssets(prev => [...prev, newAsset]);
+    try {
+      if (editingAsset) {
+        // Update existing asset
+        const updated = await assetsAPI.update(editingAsset.id, formData);
+        if (updated) {
+          setAssets(prev => prev.map(asset => 
+            asset.id === editingAsset.id ? updated : asset
+          ));
+        }
+      } else {
+        // Add new asset
+        const created = await assetsAPI.create(formData);
+        if (created) {
+          setAssets(prev => [...prev, created]);
+        }
+      }
+      handleCloseModal();
+    } catch (error) {
+      console.error('Error saving asset:', error);
+      alert('Failed to save asset. Please try again.');
     }
-    
-    handleCloseModal();
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     if (confirm('Are you sure you want to delete this asset?')) {
-      setAssets(prev => prev.filter(asset => asset.id !== id));
+      try {
+        const success = await assetsAPI.delete(id);
+        if (success) {
+          setAssets(prev => prev.filter(asset => asset.id !== id));
+        }
+      } catch (error) {
+        console.error('Error deleting asset:', error);
+        alert('Failed to delete asset. Please try again.');
+      }
     }
   };
 
