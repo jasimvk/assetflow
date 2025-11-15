@@ -1,69 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import { Users as UsersIcon, Plus, Search, Mail, Phone, Shield, Edit, Trash2, MoreVertical } from 'lucide-react';
+import { usersAPI } from '../utils/api';
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  phone?: string;
+  role: 'admin' | 'manager' | 'user';
+  department?: string;
+  status?: 'active' | 'inactive';
+  lastActive?: string;
+  avatar?: string;
+}
 
 const Users = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterRole, setFilterRole] = useState<'all' | 'admin' | 'manager' | 'user'>('all');
+  const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Mock users data
-  const users = [
-    {
-      id: '1',
-      name: 'John Doe',
-      email: 'john.doe@assetflow.com',
-      phone: '+1 (555) 123-4567',
-      role: 'admin' as const,
-      department: 'IT',
-      status: 'active' as const,
-      lastActive: '2 hours ago',
-      avatar: 'JD',
-    },
-    {
-      id: '2',
-      name: 'Jane Smith',
-      email: 'jane.smith@assetflow.com',
-      phone: '+1 (555) 234-5678',
-      role: 'manager' as const,
-      department: 'HR',
-      status: 'active' as const,
-      lastActive: '5 minutes ago',
-      avatar: 'JS',
-    },
-    {
-      id: '3',
-      name: 'Mike Johnson',
-      email: 'mike.johnson@assetflow.com',
-      phone: '+1 (555) 345-6789',
-      role: 'user' as const,
-      department: 'Operations',
-      status: 'active' as const,
-      lastActive: '1 day ago',
-      avatar: 'MJ',
-    },
-    {
-      id: '4',
-      name: 'Sarah Williams',
-      email: 'sarah.williams@assetflow.com',
-      phone: '+1 (555) 456-7890',
-      role: 'manager' as const,
-      department: 'Finance',
-      status: 'active' as const,
-      lastActive: '3 hours ago',
-      avatar: 'SW',
-    },
-    {
-      id: '5',
-      name: 'Robert Brown',
-      email: 'robert.brown@assetflow.com',
-      phone: '+1 (555) 567-8901',
-      role: 'user' as const,
-      department: 'Marketing',
-      status: 'inactive' as const,
-      lastActive: '2 weeks ago',
-      avatar: 'RB',
-    },
-  ];
+  useEffect(() => {
+    loadUsers();
+  }, []);
+
+  const loadUsers = async () => {
+    try {
+      setLoading(true);
+      const data = await usersAPI.getAll();
+      setUsers(data || []);
+    } catch (error) {
+      console.error('Error loading users:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const filteredUsers = users.filter(user => {
     const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -80,6 +52,15 @@ const Users = () => {
 
   return (
     <Layout title="Users">
+      {loading ? (
+        <div className="flex justify-center items-center h-64">
+          <div className="bg-white/70 backdrop-blur-sm border border-gray-200/60 rounded-3xl p-8">
+            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary-600 mx-auto"></div>
+            <p className="text-gray-600 text-center mt-4 font-medium">Loading users...</p>
+          </div>
+        </div>
+      ) : (
+        <>
       {/* Page Header */}
       <div className="mb-5">
         <div className="flex items-center justify-between">
@@ -236,6 +217,8 @@ const Users = () => {
           </table>
         </div>
       </div>
+      </>
+      )}
     </Layout>
   );
 };

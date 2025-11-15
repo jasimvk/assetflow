@@ -1,50 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import { Calendar, Plus, Clock, CheckCircle, AlertCircle } from 'lucide-react';
+import { maintenanceAPI, assetsAPI } from '../utils/api';
+
+interface MaintenanceRecord {
+  id: string;
+  asset_id: string;
+  asset_name?: string;
+  maintenance_type: string;
+  scheduled_date: string;
+  completed_date?: string | null;
+  status: 'scheduled' | 'in_progress' | 'completed' | 'cancelled';
+  cost: number;
+  technician?: string;
+  priority?: 'high' | 'medium' | 'low';
+  description?: string;
+  notes?: string;
+}
 
 const Maintenance = () => {
-  const [maintenanceRecords] = useState([
-    {
-      id: '1',
-      asset_name: 'MacBook Pro 16"',
-      maintenance_type: 'Software Update',
-      scheduled_date: '2024-12-01',
-      status: 'scheduled',
-      cost: 0,
-      technician: 'IT Team',
-      priority: 'medium'
-    },
-    {
-      id: '2',
-      asset_name: 'Standing Desk',
-      maintenance_type: 'Height Adjustment Check',
-      scheduled_date: '2024-11-15',
-      status: 'in_progress',
-      cost: 50,
-      technician: 'Facilities Team',
-      priority: 'low'
-    },
-    {
-      id: '3',
-      asset_name: 'Server Rack',
-      maintenance_type: 'Cooling System Maintenance',
-      scheduled_date: '2024-10-20',
-      status: 'completed',
-      cost: 300,
-      technician: 'HVAC Specialist',
-      priority: 'high'
-    },
-    {
-      id: '4',
-      asset_name: 'Conference Table',
-      maintenance_type: 'Surface Refinishing',
-      scheduled_date: '2024-11-30',
-      status: 'scheduled',
-      cost: 150,
-      technician: 'Maintenance Crew',
-      priority: 'low'
+  const [maintenanceRecords, setMaintenanceRecords] = useState<MaintenanceRecord[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadMaintenanceRecords();
+  }, []);
+
+  const loadMaintenanceRecords = async () => {
+    try {
+      setLoading(true);
+      const data = await maintenanceAPI.getAll();
+      setMaintenanceRecords(data || []);
+    } catch (error) {
+      console.error('Error loading maintenance records:', error);
+    } finally {
+      setLoading(false);
     }
-  ]);
+  };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
@@ -76,6 +68,14 @@ const Maintenance = () => {
 
   return (
     <Layout title="Maintenance">
+      {loading ? (
+        <div className="flex justify-center items-center h-64">
+          <div className="bg-white/70 backdrop-blur-sm border border-gray-200/60 rounded-3xl p-8">
+            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary-600 mx-auto"></div>
+            <p className="text-gray-600 text-center mt-4 font-medium">Loading maintenance records...</p>
+          </div>
+        </div>
+      ) : (
       <div className="space-y-6">
         {/* Header */}
         <div className="flex justify-between items-center">
@@ -270,6 +270,7 @@ const Maintenance = () => {
           </div>
         </div>
       </div>
+      )}
     </Layout>
   );
 };
