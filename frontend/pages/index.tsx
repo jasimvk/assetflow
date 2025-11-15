@@ -2,14 +2,46 @@ import React, { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/router';
-import { getAssets, getMaintenanceRecords, Asset, MaintenanceRecord } from '../utils/supabase';
+import { assetsAPI, maintenanceAPI, dashboardAPI, systemAccessAPI } from '../utils/api';
 import { Package, Calendar, Users, TrendingUp, UserPlus, Clock } from 'lucide-react';
+
+interface Asset {
+  id: string;
+  name: string;
+  category: string;
+  location: string;
+  current_value: number;
+  condition: 'excellent' | 'good' | 'fair' | 'poor';
+  purchase_date: string;
+  purchase_cost: number;
+  assigned_to: string | null;
+  maintenance_schedule: string;
+  warranty_expiry: string;
+  created_at: string;
+  updated_at: string;
+}
+
+interface MaintenanceRecord {
+  id: string;
+  asset_id: string;
+  maintenance_type: string;
+  description: string;
+  scheduled_date: string;
+  completed_date: string | null;
+  cost: number;
+  status: 'scheduled' | 'in_progress' | 'completed' | 'cancelled';
+  notes: string;
+  created_at: string;
+  updated_at: string;
+}
 
 const Dashboard = () => {
   const { isAuthenticated, loading } = useAuth();
   const router = useRouter();
   const [assets, setAssets] = useState<Asset[]>([]);
   const [maintenanceRecords, setMaintenanceRecords] = useState<MaintenanceRecord[]>([]);
+  const [dashboardStats, setDashboardStats] = useState<any>(null);
+  const [pendingRequests, setPendingRequests] = useState<number>(0);
   const [dashboardLoading, setDashboardLoading] = useState(true);
 
   useEffect(() => {
@@ -21,97 +53,31 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // In development mode, use mock data
-        if (process.env.NODE_ENV === 'development') {
-          const mockAssets = [
-            {
-              id: '1',
-              name: 'MacBook Pro 16"',
-              category: 'IT Equipment',
-              location: 'Office - Floor 1',
-              current_value: 2500,
-              condition: 'excellent' as const,
-              purchase_date: '2023-01-15',
-              purchase_cost: 3000,
-              assigned_to: null,
-              maintenance_schedule: 'quarterly',
-              warranty_expiry: '2025-01-15',
-              created_at: '2023-01-15T00:00:00Z',
-              updated_at: '2023-01-15T00:00:00Z'
-            },
-            {
-              id: '2',
-              name: 'Standing Desk',
-              category: 'Office Furniture',
-              location: 'Office - Floor 2',
-              current_value: 800,
-              condition: 'good' as const,
-              purchase_date: '2023-02-20',
-              purchase_cost: 1000,
-              assigned_to: null,
-              maintenance_schedule: 'annually',
-              warranty_expiry: '2026-02-20',
-              created_at: '2023-02-20T00:00:00Z',
-              updated_at: '2023-02-20T00:00:00Z'
-            },
-            {
-              id: '3',
-              name: 'Office Printer',
-              category: 'IT Equipment',
-              location: 'Office - Floor 1',
-              current_value: 400,
-              condition: 'fair' as const,
-              purchase_date: '2022-06-10',
-              purchase_cost: 600,
-              assigned_to: null,
-              maintenance_schedule: 'monthly',
-              warranty_expiry: '2024-06-10',
-              created_at: '2022-06-10T00:00:00Z',
-              updated_at: '2022-06-10T00:00:00Z'
-            }
-          ];
+        setDashboardLoading(true);
+        
+        // Fetch all data in parallel
+        const [
+          fetchedAssets,
+          fetchedMaintenance,
+          stats,
+          systemAccessRequests
+        ] = await Promise.all([
+          assetsAPI.getAll(),
+          maintenanceAPI.getAll(),
+          dashboardAPI.getStats(),
+          systemAccessAPI.getAll({ status: 'pending' })
+        ]);
 
-          const mockMaintenanceRecords = [
-            {
-              id: '1',
-              asset_id: '1',
-              maintenance_type: 'Preventive Maintenance',
-              description: 'Regular system check and software updates',
-              scheduled_date: '2023-12-01',
-              completed_date: null,
-              cost: 150,
-              status: 'scheduled' as const,
-              notes: 'Quarterly maintenance due',
-              created_at: '2023-11-01T00:00:00Z',
-              updated_at: '2023-11-01T00:00:00Z'
-            },
-            {
-              id: '2',
-              asset_id: '3',
-              maintenance_type: 'Repair',
-              description: 'Paper jam issue and toner replacement',
-              scheduled_date: '2023-11-15',
-              completed_date: '2023-11-16',
-              cost: 75,
-              status: 'completed' as const,
-              notes: 'Fixed paper feeder mechanism',
-              created_at: '2023-11-10T00:00:00Z',
-              updated_at: '2023-11-16T00:00:00Z'
-            }
-          ];
-
-          setAssets(mockAssets);
-          setMaintenanceRecords(mockMaintenanceRecords);
-        } else {
-          const [fetchedAssets, fetchedMaintenance] = await Promise.all([
-            getAssets(),
-            getMaintenanceRecords()
-          ]);
-          setAssets(fetchedAssets);
-          setMaintenanceRecords(fetchedMaintenance);
-        }
+        setAssets(fetchedAssets || []);
+        setMaintenanceRecords(fetchedMaintenance || []);
+        setDashboardStats(stats);
+        setPendingRequests(systemAccessRequests?.length || 0);
       } catch (error) {
         console.error('Error fetching dashboard data:', error);
+        // Set empty arrays on error
+        setAssets([]);
+        setMaintenanceRecords([]);
+        setPendingRequests(0);
       } finally {
         setDashboardLoading(false);
       }
@@ -157,15 +123,15 @@ const Dashboard = () => {
     },
     {
       name: 'Pending Access Requests',
-      value: '2',
+      value: pendingRequests.toString(),
       icon: UserPlus,
       color: 'text-orange-600',
       bgColor: 'bg-orange-100',
     },
     {
-      name: 'Active Users',
-      value: '45',
-      icon: Users,
+      name: 'Active Maintenance',
+      value: assetsInMaintenance.toString(),
+      icon: Clock,
       color: 'text-green-600',
       bgColor: 'bg-green-100',
     },
