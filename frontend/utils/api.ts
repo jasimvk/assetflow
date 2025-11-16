@@ -12,16 +12,31 @@ const handleError = (error: any) => {
 export const assetsAPI = {
   getAll: async (filters?: { category?: string; location?: string; condition?: string }) => {
     try {
-      let query = supabase.from('assets').select('*').order('created_at', { ascending: false });
+      console.log('Fetching assets from Supabase...');
+      let query = supabase.from('assets').select(`
+        *,
+        department:department_id (
+          id,
+          name,
+          description
+        )
+      `);
       
       if (filters?.category) query = query.eq('category', filters.category);
       if (filters?.location) query = query.eq('location', filters.location);
       if (filters?.condition) query = query.eq('condition', filters.condition);
       
       const { data, error } = await query;
-      if (error) throw error;
-      return data;
+      
+      if (error) {
+        console.error('Supabase error:', error);
+        throw error;
+      }
+      
+      console.log('Assets fetched successfully:', data?.length || 0, 'records');
+      return data || [];
     } catch (error) {
+      console.error('Error in getAll:', error);
       handleError(error);
       return [];
     }
@@ -445,6 +460,40 @@ export const notificationsAPI = {
     } catch (error) {
       handleError(error);
       return false;
+    }
+  }
+};
+
+// Departments API
+export const departmentsAPI = {
+  getAll: async () => {
+    try {
+      const { data, error } = await supabase
+        .from('departments')
+        .select('*')
+        .order('name', { ascending: true });
+      
+      if (error) throw error;
+      return data;
+    } catch (error) {
+      handleError(error);
+      return [];
+    }
+  },
+
+  getById: async (id: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('departments')
+        .select('*')
+        .eq('id', id)
+        .single();
+      
+      if (error) throw error;
+      return data;
+    } catch (error) {
+      handleError(error);
+      return null;
     }
   }
 };

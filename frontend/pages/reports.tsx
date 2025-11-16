@@ -199,7 +199,7 @@ const Reports = () => {
           </div>
           <div className="text-center p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-2xl">
             <DollarSign className="h-8 w-8 text-green-600 mx-auto mb-3" />
-            <p className="text-3xl font-bold text-gray-900 mb-1">$3,700</p>
+            <p className="text-3xl font-bold text-gray-900 mb-1">AED 3,700</p>
             <p className="text-sm text-gray-600 font-semibold">Total Value</p>
           </div>
           <div className="text-center p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl">
@@ -209,7 +209,7 @@ const Reports = () => {
           </div>
           <div className="text-center p-6 bg-gradient-to-br from-orange-50 to-orange-100 rounded-2xl">
             <BarChart3 className="h-8 w-8 text-orange-600 mx-auto mb-3" />
-            <p className="text-3xl font-bold text-gray-900 mb-1">$450</p>
+            <p className="text-3xl font-bold text-gray-900 mb-1">AED 450</p>
             <p className="text-sm text-gray-600 font-semibold">Avg. Depreciation</p>
           </div>
         </div>

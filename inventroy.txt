@@ -1,0 +1,78 @@
+IT Peripherals
+Asset Name	Location	Model Name	Configuration	Serial No.	Year Of Purchase	Warranty end	Transferred To	Department	Issued Date	Asset Code
+		Mione Pro	128GB, Non-Camera		354663510053653			Murzhamal Abbirafhoba		29 Nov 2023					
+		Mione Pro	128GB, Non-Camera		254663410016759			Bermet Kenzhebekova		29 Nov 2023					
+		iPhone SE 	128, Non-Camera	FFMH701GPLK1	356552960554897			Chanelle Erwee		29 Nov 2023					
+		Mione Pro	128GB, Non-Camera		354663410009770			Aizaida Kubatbekova		5 Dec 2023					
+		Mione Pro	128GB, Non-Camera		354663410047010p			Marina Sukhankina		7 Dec 2023					
+		iPhone SE 	128, Non-Camera	DX3HF023PLK1	352853883960862			Kara Conyers		11 Dec 2023					
+		iPhone SE 	128, Non-Camera	FFMGP1BZPLK1	356844119600030			Mario Fico		12 Dec 2023					
+		iPhone SE 	128, Non-Camera	F17DH3XLPLK1	356474109303344			Anoj Rodrigo		18 Dec 2023					
+		iPhone SE 	128, Non-Camera	FFMH904TPLK1	35283883329530			Hanna Ternovska		3 Jan 2024					
+		iPhone SE 	128, Non-Camera	DX3HF09XPLK1	352853884304789			Sofia Alekseitseva		3 Jan 2024					
+		iPhone SE 	128, Non-Camera	F17DG5H6PLK1	356463109060681			Emily Smith		9 Jan 2024					
+		Mione Pro	128GB, Non-Camera		354663410060831			Kimberly Abing	Housekeeping	22 Jan 2024					
+		iPhone SE	Non-Camera	F17DG3WZPLK1				Berna Navarro	Housekeeping	29 Feb 2024					
+		iPhone 7	Non-Camera		353837085172243			Maria Sole	F&B	4 Apr 2024					
+		iPhone SE 	128, Non-Camera	F17DG3GGPLK1	356463109438119			Evguenia Lomteva		24 Nov 2023					
+		MiOne Pro Plus	Non-Camera		354663410058934			Leo Reyes	Project	20 Sep 2023					
+		MiOne Pro Plus	Non-Camera		354663410047010			Gulshan Durusbekova	Project	5 Sep 2023					
+		MiOne Pro Plus	Non-Camera		354663410054990			Gulnura Muktarbekova	Project	5 Sep 2023					
+		MiOne Pro Plus	Non-Camera		354663410047697			Samiksha Paudel	Housekeeping	4 Sep 2023					
+		Lava Benco V80s	Non-camera		865055050015245			Iana Bicova	F&B	22 Jun 2023					
+		Lava Benco V80s	Non-camera		865055050044740			Dane Lemmer	F&B	22 Jun 2023					
+		Lava Benco V80s	Non-camera		865055050094984			Chanida Pannue	F&B	17 Apr 2023					
+		Lava Benco V80s	Non-camera		865055050092723			Nina Raimanova	F&B	15 Mar 2023					
+		Lava Benco V80s	Non-camera		865055027505			Evghenia Ginju		31 Jan 2023					
+		Lava Benco V80s	Non-camera		8650550015989			Vitaliia Zanudina		30 Jan 2023					
+		Lava Benco V80s	Non-camera		865055050062122			Anastassiya Gonareva	F&B	5 Jan 2023					
+		iPhone 7	Non-Camera	F4GV4SGRHG6W				Sofia Romanenko	F&B	22 Nov 2022					
+		Benco/Lava		LE9940-W				Abigail Abalos	Housekeeping	2 Nov 2022					
+		iPhone SE	Non-Camera		350737736530059			Olivia Svetlana	F&B	8 Apr 2025					
+		Benco S1s	Non-Camera		862406046762290			Bassel Assali	Catering	13 Nov 2024					
+	White Villa	iPhone 7	64GB	ONPLXOVLH67X				Jacqueline De Belen	Housekeeping						
+	White Villa	Lava Benco V80s	Non-camera		865055050024767			Jessica Morate	Housekeeping	31 Jan 2021					
+		Lava Benco V80s	Non-camera		865055050015427			Violetta Khalikova	F&B	5 Jan 2022					
+	Spanish Villa	iPhone 7		F71WQFY9HG6W				Catherine Reotorio	Housekeeping	28 Jan 2022					
+	Spanish Villa	iPhone 7		DX3Z888AHG6X				Ronalyn Tolentino	Housekeeping	28 Jan 2022					
+	White Villa	iPhone SE 	64GB	GWVGR4JVPLJT				Katarina Dela Cruz	Housekeeping	29 Jan 2022					
+		iPhone SE 	128GB	DX3GN5PAPLJY				Berna Navarro	Housekeeping	29 Jan 2022					
+	White Villa	iPhone 7		F4GSR04FHG6W				Vanessa Paraiso	Housekeeping	29 Jan 2022					
+		Lava Benco V80s	Non-camera		865055050010741			Maria Laiza Santos	Housekeeping	29 Jan 2022					
+		Lava Benco V80s	Non-camera		8650550500017126			Amanova Ainazik	F&B	2 Feb 2022					
+		Lava Benco V80s	Non-camera		865055050024700			Mary Grace Mateo	F&B	2 Feb 2022					
+		Lava Benco V80s	Non-camera		8650550500011640			Famaele 	F&B	2 Feb 2022					
+		Lava Benco V80s	Non-camera		865055050014206			Samey Calo	F&B	2 Feb 2022					
+		iPhone SE 	128GB	DX3GJ7QWPLJY	                         			Olena Artymko	F&B	2 Feb 2022					
+		Lava Benco V80s	Non-camera		865055050016243			Annehe Maka	F&B	2 Feb 2022					
+		Lava Benco V80s	Non-camera		865055050008703			Bea Samantha Salvino	F&B	2 Feb 2022					
+		Lava Benco V80s	Non-camera		865055050016904			Roxxanne Jane Calimlim	Housekeeping	3 Feb 2022					
+		iPhone 7			355833088785576			Yana Berlinska	F&B	3 Feb 2022					
+		Lava Benco V80s	Non-camera		865055050021888			Marie Cauborell	F&B	3 Feb 2022					
+		Lava Benco V80s	Non-camera		865055050026309			Amoz Gachambusa	Housekeeping	7 Feb 2022					
+		Lava Benco V80s	Non-camera		865055050015609			Anil Kumar Reddaboini	Housekeeping	8 Feb 2022					
+		Lava Benco V80s	Non-camera		865055050023769			Maria Laiza Santos	Housekeeping	8 Feb 2022					
+		Lava Benco V80s	Non-camera		865055050027364			Arunj Raja Rapu	Housekeeping	8 Feb 2022					
+		Lava Benco V80s	Non-camera		865055050005907			Poashanlh Kunta	Housekeeping	8 Feb 2022					
+		Lava Benco V80s	Non-camera		865055050027448			Ajaveenl Gaje	Housekeeping	8 Feb 2022					
+		Lava Benco V80s	Non-camera		865055050016326			Maria Victoria Clano	Nurse	11 Feb 2022					
+		Benco		AE9010W				Dianne Montanez	Housekeeping	11 Feb 2022					
+		Lava Benco V80s	Non-camera		865005050013505			Anum Kumai	L&T	4 Mar 2022					
+		Lava Benco V80s	Non-camera		865005050016326			Boby Jacob Thomen	L&T	4 Mar 2022					
+		Lava Benco V80s	Non-camera		865005050015682			Firash	L&T	5 Mar 2022					
+		Lava Benco V80s	Non-camera		865005050011145			Rabik	L&T	7 Mar 2022					
+		Lava Benco V80s	Non-camera		865055050016482			Zoe Fernandez	Housekeeping	24 May 2022					
+		Lava V7s	Non-Camera		353967110294975			Zara Yardimci		12 Jun 2024					
+		iPhone 7	Non-Camera		355322086700423			Anxhela Kita		24 Jun 2024					
+		Benco V7 Prime	Non-camera		3539667110294975			Ramah Putuwar	Housekeeping	24 May 2022					
+		Vivo 	Non-Camera		865055050002888			Aadinath Harkumar	Housekeeping	30 Sep 2022					
+		Vivo 	Non-Camera		865055050003282			Shekar Allkonda	Housekeeping	30 Sep 2022					
+		Vivo 	Non-Camera		865055050060340			Vasylysa Korobeinikova	F&B	30 Sep 2022					
+		Lava Benco V80s	Non-camera		865055050025186			Mukesh Narra	Housekeeping	25 Oct 2022								
+										
+										
+										
+										
+										
+										
+										

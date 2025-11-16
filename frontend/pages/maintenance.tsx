@@ -164,7 +164,7 @@ const Maintenance = () => {
                     Total Cost
                   </dt>
                   <dd className="text-lg font-medium text-gray-900">
-                    ${maintenanceRecords.reduce((sum, record) => sum + record.cost, 0).toLocaleString()}
+                    AED {maintenanceRecords.reduce((sum, record) => sum + record.cost, 0).toLocaleString()}
                   </dd>
                 </dl>
               </div>
@@ -247,7 +247,7 @@ const Maintenance = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-medium text-gray-900">
-                        ${record.cost.toLocaleString()}
+                        AED {record.cost.toLocaleString()}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">

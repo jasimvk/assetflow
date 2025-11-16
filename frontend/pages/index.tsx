@@ -116,7 +116,7 @@ const Dashboard = () => {
     },
     {
       name: 'Total Value',
-      value: `$${totalValue.toLocaleString()}`,
+      value: `AED ${totalValue.toLocaleString()}`,
       icon: TrendingUp,
       color: 'text-purple-600',
       bgColor: 'bg-purple-100',
@@ -293,7 +293,7 @@ const Dashboard = () => {
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="text-sm font-bold text-gray-900">${asset.current_value.toLocaleString()}</p>
+                        <p className="text-sm font-bold text-gray-900">AED {asset.current_value.toLocaleString()}</p>
                         <span className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full ${
                           asset.condition === 'excellent' ? 'bg-green-100 text-green-700 border border-green-200' :
                           asset.condition === 'good' ? 'bg-blue-100 text-blue-700 border border-blue-200' :

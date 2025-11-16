@@ -42,14 +42,16 @@ CREATE TABLE IF NOT EXISTS assets (
     description TEXT,
     category VARCHAR(100) NOT NULL,
     location VARCHAR(255) NOT NULL,
-    serial_number VARCHAR(100) UNIQUE,
+    serial_number VARCHAR(100), -- Nullable, no unique constraint (multiple assets may not have serial numbers)
     model VARCHAR(100),
     manufacturer VARCHAR(100),
-    purchase_date DATE NOT NULL,
-    purchase_cost DECIMAL(12, 2) NOT NULL CHECK (purchase_cost >= 0),
-    current_value DECIMAL(12, 2) NOT NULL CHECK (current_value >= 0),
+    purchase_date DATE, -- Nullable for assets without purchase records
+    purchase_cost DECIMAL(12, 2) DEFAULT 0 CHECK (purchase_cost >= 0), -- Nullable with default
+    current_value DECIMAL(12, 2) DEFAULT 0 CHECK (current_value >= 0), -- Nullable with default
     condition VARCHAR(20) CHECK (condition IN ('excellent', 'good', 'fair', 'poor')) DEFAULT 'good',
-    assigned_to UUID REFERENCES users(id) ON DELETE SET NULL,
+    status VARCHAR(50) CHECK (status IN ('active', 'in_stock', 'maintenance', 'retired', 'disposed')) DEFAULT 'active',
+    assigned_to TEXT, -- Changed to TEXT to store user names directly instead of UUID foreign key
+    department VARCHAR(100), -- Department that owns or uses this asset
     maintenance_schedule VARCHAR(50), -- e.g., 'monthly', 'quarterly', 'annually'
     warranty_expiry DATE,
     notes TEXT,
@@ -132,7 +134,9 @@ CREATE TABLE IF NOT EXISTS notifications (
 -- Create indexes for better performance
 CREATE INDEX IF NOT EXISTS idx_assets_category ON assets(category);
 CREATE INDEX IF NOT EXISTS idx_assets_location ON assets(location);
-CREATE INDEX IF NOT EXISTS idx_assets_assigned_to ON assets(assigned_to);
+CREATE INDEX IF NOT EXISTS idx_assets_status ON assets(status);
+CREATE INDEX IF NOT EXISTS idx_assets_serial_number ON assets(serial_number) WHERE serial_number IS NOT NULL;
+CREATE INDEX IF NOT EXISTS idx_assets_assigned_to ON assets(assigned_to) WHERE assigned_to IS NOT NULL;
 CREATE INDEX IF NOT EXISTS idx_assets_condition ON assets(condition);
 CREATE INDEX IF NOT EXISTS idx_maintenance_records_asset_id ON maintenance_records(asset_id);
 CREATE INDEX IF NOT EXISTS idx_maintenance_records_status ON maintenance_records(status);
@@ -150,35 +154,59 @@ BEGIN
 END;
 $$ language 'plpgsql';
 
+-- Drop existing triggers if they exist
+DROP TRIGGER IF EXISTS update_users_updated_at ON users;
+DROP TRIGGER IF EXISTS update_assets_updated_at ON assets;
+DROP TRIGGER IF EXISTS update_maintenance_records_updated_at ON maintenance_records;
+
 -- Create triggers for updated_at columns
 CREATE TRIGGER update_users_updated_at BEFORE UPDATE ON users FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_assets_updated_at BEFORE UPDATE ON assets FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_maintenance_records_updated_at BEFORE UPDATE ON maintenance_records FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
--- Insert default categories
+-- Insert default categories (11 asset types)
 INSERT INTO categories (name, description) VALUES
-('IT Equipment', 'Computers, servers, networking equipment'),
-('Office Furniture', 'Desks, chairs, cabinets, meeting room furniture'),
-('Vehicles', 'Company cars, trucks, delivery vehicles'),
-('Machinery', 'Manufacturing equipment, tools, heavy machinery'),
-('HVAC', 'Heating, ventilation, and air conditioning systems'),
-('Security', 'Cameras, access control systems, alarms'),
-('Medical Equipment', 'Healthcare devices and instruments'),
-('Laboratory Equipment', 'Scientific instruments and lab tools')
+('Server', 'Physical and virtual servers including ProLiant, Dell, HP models with IP addresses'),
+('Switch', 'Network switches, firewalls, and networking equipment'),
+('Storage', 'Network Attached Storage (NAS), SAN, and storage devices'),
+('Laptop', 'Laptop computers with OS, memory, CPU specifications and user assignments'),
+('Desktop', 'Desktop computers with OS, memory, CPU specifications and user assignments'),
+('Monitor', 'Display monitors assigned to users across departments'),
+('Mobile Phone', 'Mobile phones and smartphones with IMEI numbers'),
+('Walkie Talkie', 'Two-way radios and walkie talkie devices'),
+('Tablet', 'Tablet devices including iPads and Android tablets'),
+('Printer', 'Printers including laser, inkjet, and multifunction devices'),
+('IT Peripherals', 'Keyboards, mice, webcams, and other computer peripherals'),
+('Other', 'Other assets not fitting into standard categories')
 ON CONFLICT (name) DO NOTHING;
 
--- Insert default locations
-INSERT INTO locations (name, address, building, floor) VALUES
-('Headquarters', '123 Business Ave, Suite 100', 'Main Building', '1st Floor'),
-('Warehouse', '456 Storage St', 'Warehouse A', 'Ground Floor'),
-('Branch Office', '789 Commerce Blvd', 'Office Complex B', '3rd Floor')
+-- Insert default locations (common office locations)
+INSERT INTO locations (name, address) VALUES
+('Head Office', 'Main Office Location'),
+('Spanish Villa', 'Spanish Villa Property'),
+('White Villa', 'White Villa Property'),
+('Saadiyat Villa 07', 'Saadiyat Villa Property'),
+('Main Store', 'Main Store Location'),
+('Store', 'Store Location'),
+('Office - Floor 1', 'First Floor'),
+('Office - Floor 2', 'Second Floor'),
+('Warehouse', 'Warehouse Location')
 ON CONFLICT (name) DO NOTHING;
 
--- Row Level Security (RLS) policies
+-- Drop existing triggers if they exist
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE assets ENABLE ROW LEVEL SECURITY;
 ALTER TABLE maintenance_records ENABLE ROW LEVEL SECURITY;
 ALTER TABLE notifications ENABLE ROW LEVEL SECURITY;
+
+-- Drop existing policies if they exist
+DROP POLICY IF EXISTS "Users can view own data" ON users;
+DROP POLICY IF EXISTS "Everyone can view assets" ON assets;
+DROP POLICY IF EXISTS "Managers and admins can modify assets" ON assets;
+DROP POLICY IF EXISTS "Everyone can view maintenance records" ON maintenance_records;
+DROP POLICY IF EXISTS "Managers and admins can modify maintenance records" ON maintenance_records;
+DROP POLICY IF EXISTS "Users can view own notifications" ON notifications;
+DROP POLICY IF EXISTS "Users can update own notifications" ON notifications;
 
 -- Create policies (adjust based on your authentication setup)
 -- These are basic policies - you should customize them based on your specific requirements

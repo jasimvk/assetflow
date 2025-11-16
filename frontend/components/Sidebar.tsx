@@ -13,7 +13,8 @@ import {
   Menu,
   Shield,
   Activity,
-  UserPlus
+  UserPlus,
+  Upload
 } from 'lucide-react';
 
 interface SidebarProps {
