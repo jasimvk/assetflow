@@ -5,10 +5,10 @@ import { usersAPI } from '../utils/api';
 
 interface User {
   id: string;
-  name: string;
-  email: string;
+  name?: string;
+  email?: string;
   phone?: string;
-  role: 'admin' | 'manager' | 'user';
+  role?: 'admin' | 'manager' | 'user';
   department?: string;
   status?: 'active' | 'inactive';
   lastActive?: string;
@@ -38,8 +38,8 @@ const Users = () => {
   };
 
   const filteredUsers = users.filter(user => {
-    const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         user.email.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         user.email?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesRole = filterRole === 'all' || user.role === filterRole;
     return matchesSearch && matchesRole;
   });
@@ -154,7 +154,7 @@ const Users = () => {
                   <td className="px-6 py-4">
                     <div className="flex items-center">
                       <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-2xl flex items-center justify-center text-white font-bold mr-3">
-                        {user.avatar}
+                        {user.avatar || user.name?.charAt(0)?.toUpperCase() || 'U'}
                       </div>
                       <div>
                         <p className="text-sm font-semibold text-gray-900">{user.name}</p>
@@ -170,7 +170,7 @@ const Users = () => {
                       </div>
                       <div className="flex items-center text-sm text-gray-600">
                         <Phone className="h-4 w-4 mr-2 text-gray-400" />
-                        {user.phone}
+                        {user.phone || 'N/A'}
                       </div>
                     </div>
                   </td>
@@ -181,22 +181,22 @@ const Users = () => {
                       'bg-gray-100 text-gray-700 border border-gray-200'
                     }`}>
                       <Shield className="h-3 w-3 mr-1" />
-                      {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
+                      {user.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : 'User'}
                     </span>
                   </td>
                   <td className="px-6 py-4">
-                    <span className="text-sm font-medium text-gray-900">{user.department}</span>
+                    <span className="text-sm font-medium text-gray-900">{user.department || 'N/A'}</span>
                   </td>
                   <td className="px-6 py-4">
                     <span className={`inline-flex px-3 py-1 rounded-full text-xs font-semibold ${
                       user.status === 'active' ? 'bg-green-100 text-green-700 border border-green-200' :
                       'bg-red-100 text-red-700 border border-red-200'
                     }`}>
-                      {user.status.charAt(0).toUpperCase() + user.status.slice(1)}
+                      {user.status ? user.status.charAt(0).toUpperCase() + user.status.slice(1) : 'Unknown'}
                     </span>
                   </td>
                   <td className="px-6 py-4">
-                    <span className="text-sm text-gray-600">{user.lastActive}</span>
+                    <span className="text-sm text-gray-600">{user.lastActive || 'Never'}</span>
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center justify-end gap-2">
