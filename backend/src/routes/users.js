@@ -1,10 +1,13 @@
 const express = require('express');
 const { body, validationResult } = require('express-validator');
 const supabase = require('../config/database');
+const { requireRole } = require('../middleware/rbac');
+const { ROLES } = require('../../shared/roles');
+const mockAuth = require('../middleware/mockAuth');
 const router = express.Router();
 
-// Get all users
-router.get('/', async (req, res) => {
+// Get all users (admin only)
+router.get('/', mockAuth, requireRole(ROLES.ADMIN), async (req, res) => {
   try {
     const { page = 1, limit = 10, role, department } = req.query;
     const offset = (page - 1) * limit;
@@ -38,7 +41,7 @@ router.get('/', async (req, res) => {
 });
 
 // Get single user
-router.get('/:id', async (req, res) => {
+router.get('/:id', mockAuth, async (req, res) => {
   try {
     const { data, error } = await supabase
       .from('users')

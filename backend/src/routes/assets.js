@@ -1,6 +1,9 @@
 const express = require('express');
 const { body, validationResult } = require('express-validator');
 const supabase = require('../config/database');
+const { requireRole, requirePermission, applyDataScope } = require('../middleware/rbac');
+const { ROLES, PERMISSIONS } = require('../../shared/roles');
+const mockAuth = require('../middleware/mockAuth');
 const router = express.Router();
 
 // Validation middleware
@@ -14,8 +17,8 @@ const validateAsset = [
   body('condition').isIn(['excellent', 'good', 'fair', 'poor']).withMessage('Condition must be excellent, good, fair, or poor'),
 ];
 
-// Get all assets
-router.get('/', async (req, res) => {
+// Get all assets (with RBAC filtering)
+router.get('/', mockAuth, applyDataScope(), async (req, res) => {
   try {
     const { page = 1, limit = 10, category, location, condition } = req.query;
     const offset = (page - 1) * limit;
@@ -26,6 +29,17 @@ router.get('/', async (req, res) => {
       .range(offset, offset + limit - 1)
       .order('created_at', { ascending: false });
 
+    // Apply RBAC filters from middleware
+    if (req.filters) {
+      if (req.filters.department) {
+        query = query.eq('department', req.filters.department);
+      }
+      if (req.filters.assigned_to) {
+        query = query.eq('assigned_to', req.filters.assigned_to);
+      }
+    }
+
+    // Apply additional query filters
     if (category) query = query.eq('category', category);
     if (location) query = query.eq('location', location);
     if (condition) query = query.eq('condition', condition);
@@ -50,7 +64,7 @@ router.get('/', async (req, res) => {
 });
 
 // Get single asset
-router.get('/:id', async (req, res) => {
+router.get('/:id', mockAuth, async (req, res) => {
   try {
     const { data, error } = await supabase
       .from('assets')
@@ -72,8 +86,8 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Create new asset
-router.post('/', validateAsset, async (req, res) => {
+// Create new asset (admin only)
+router.post('/', mockAuth, requireRole(ROLES.ADMIN), validateAsset, async (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -101,8 +115,8 @@ router.post('/', validateAsset, async (req, res) => {
   }
 });
 
-// Update asset
-router.put('/:id', validateAsset, async (req, res) => {
+// Update asset (admin only)
+router.put('/:id', mockAuth, requirePermission(PERMISSIONS.ASSETS.UPDATE_ALL), validateAsset, async (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -135,8 +149,8 @@ router.put('/:id', validateAsset, async (req, res) => {
   }
 });
 
-// Delete asset
-router.delete('/:id', async (req, res) => {
+// Delete asset (admin only)
+router.delete('/:id', mockAuth, requirePermission(PERMISSIONS.ASSETS.DELETE_ALL), async (req, res) => {
   try {
     const { error } = await supabase
       .from('assets')
@@ -152,8 +166,8 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-// Get asset statistics
-router.get('/stats/summary', async (req, res) => {
+// Get asset statistics (admin and managers)
+router.get('/stats/summary', mockAuth, requireRole(ROLES.ADMIN, ROLES.MANAGER), async (req, res) => {
   try {
     const { data: assets, error } = await supabase
       .from('assets')

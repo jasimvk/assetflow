@@ -1,6 +1,9 @@
 const express = require('express');
 const { body, validationResult } = require('express-validator');
 const supabase = require('../config/database');
+const { requirePermission, applyDataScope } = require('../middleware/rbac');
+const { PERMISSIONS } = require('../../shared/roles');
+const mockAuth = require('../middleware/mockAuth');
 const router = express.Router();
 
 // Validation middleware for system access requests
@@ -32,8 +35,8 @@ const generateRequestNumber = async () => {
   return `SAR-${year}-${String(lastNumber + 1).padStart(3, '0')}`;
 };
 
-// Get all system access requests
-router.get('/', async (req, res) => {
+// Get all system access requests (with RBAC filtering)
+router.get('/', mockAuth, applyDataScope(), async (req, res) => {
   try {
     const { page = 1, limit = 10, status, department } = req.query;
     const offset = (page - 1) * limit;
@@ -48,6 +51,17 @@ router.get('/', async (req, res) => {
       .range(offset, offset + limit - 1)
       .order('created_at', { ascending: false });
 
+    // Apply RBAC filters from middleware
+    if (req.filters) {
+      if (req.filters.department) {
+        query = query.eq('department', req.filters.department);
+      }
+      if (req.filters.user_id) {
+        query = query.eq('requested_by', req.filters.user_id);
+      }
+    }
+
+    // Apply additional query filters
     if (status) query = query.eq('status', status);
     if (department) query = query.eq('department', department);
 
@@ -71,7 +85,7 @@ router.get('/', async (req, res) => {
 });
 
 // Get single system access request with details
-router.get('/:id', async (req, res) => {
+router.get('/:id', mockAuth, async (req, res) => {
   try {
     const { data: request, error: requestError } = await supabase
       .from('system_access_requests')
@@ -137,7 +151,8 @@ router.get('/:id', async (req, res) => {
 });
 
 // Create new system access request
-router.post('/', validateAccessRequest, async (req, res) => {
+// Create new system access request (all authenticated users)
+router.post('/', mockAuth, requirePermission(PERMISSIONS.SYSTEM_ACCESS.CREATE), validateAccessRequest, async (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -241,13 +256,27 @@ router.post('/', validateAccessRequest, async (req, res) => {
   }
 });
 
-// Update system access request status
-router.patch('/:id/status', async (req, res) => {
+// Update system access request status (admin only for approve/reject)
+router.patch('/:id/status', mockAuth, async (req, res) => {
   try {
     const { status, comments, reason } = req.body;
     
     if (!['pending', 'in_progress', 'approved', 'rejected', 'completed', 'cancelled'].includes(status)) {
       return res.status(400).json({ error: 'Invalid status' });
+    }
+
+    // Check permissions for approve/reject
+    if (status === 'approved' || status === 'rejected') {
+      const { hasPermission } = require('../../shared/roles');
+      const canApprove = hasPermission(req.user.role, PERMISSIONS.SYSTEM_ACCESS.APPROVE);
+      const canReject = hasPermission(req.user.role, PERMISSIONS.SYSTEM_ACCESS.REJECT);
+      
+      if ((status === 'approved' && !canApprove) || (status === 'rejected' && !canReject)) {
+        return res.status(403).json({ 
+          error: 'Forbidden',
+          message: 'You do not have permission to approve or reject system access requests'
+        });
+      }
     }
 
     const updateData = {
