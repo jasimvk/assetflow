@@ -1,39 +1,26 @@
 const authMiddleware = async (req, res, next) => {
   try {
-    // For development mode, bypass authentication
-    if (process.env.NODE_ENV === 'development') {
-      req.user = { 
-        id: 'dev-user-123', 
-        email: 'dev@example.com', 
-        role: 'admin',
-        name: 'Development User'
-      };
-      return next();
-    }
-
     const authHeader = req.headers.authorization;
     
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({ error: 'No token provided' });
+      return res.status(401).json({ 
+        error: 'No token provided',
+        message: 'Please provide a valid authentication token'
+      });
     }
 
     const token = authHeader.substring(7); // Remove 'Bearer ' prefix
     
-    // In production, validate the JWT token from Azure AD
-    // This is a simplified version - in production you'd want to validate the JWT signature
-    try {
-      // You would typically validate the JWT token here with Azure AD
-      // For now, we'll accept any token and create a mock user
-      req.user = { 
-        id: 'user-id-456', 
-        email: 'user@company.com',
-        role: 'manager',
-        name: 'Production User'
-      };
-      next();
-    } catch (tokenError) {
-      return res.status(401).json({ error: 'Invalid token' });
-    }
+    // TODO: Implement real JWT token validation
+    // Validate the JWT token from Azure AD (Entra ID)
+    // Verify signature, expiration, and claims
+    // Extract user information from validated token
+    
+    // For now, reject all requests until proper auth is configured
+    return res.status(401).json({ 
+      error: 'Authentication not configured',
+      message: 'Please configure Azure AD (Entra ID) authentication. See SETUP_CREDENTIALS.md for instructions.'
+    });
     
   } catch (error) {
     console.error('Auth middleware error:', error);

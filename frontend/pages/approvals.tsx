@@ -1,68 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import { CheckCircle, XCircle, Clock, Filter, Search } from 'lucide-react';
 
+interface Approval {
+  id: string;
+  type: string;
+  item: string;
+  requestedBy: string;
+  department: string;
+  amount: string;
+  date: string;
+  status: 'pending' | 'approved' | 'rejected';
+  priority: 'high' | 'medium' | 'low';
+}
+
 const Approvals = () => {
   const [filter, setFilter] = useState<'all' | 'pending' | 'approved' | 'rejected'>('all');
+  const [approvals, setApprovals] = useState<Approval[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Mock approvals data
-  const approvals = [
-    {
-      id: '1',
-      type: 'Asset Purchase',
-      item: 'MacBook Pro 16" M3',
-      requestedBy: 'John Doe',
-      department: 'IT',
-      amount: '$3,499',
-      date: '2025-10-05',
-      status: 'pending' as const,
-      priority: 'high' as const,
-    },
-    {
-      id: '2',
-      type: 'Asset Transfer',
-      item: 'Standing Desk',
-      requestedBy: 'Jane Smith',
-      department: 'HR',
-      amount: '-',
-      date: '2025-10-04',
-      status: 'approved' as const,
-      priority: 'medium' as const,
-    },
-    {
-      id: '3',
-      type: 'Asset Disposal',
-      item: 'Old Server Rack',
-      requestedBy: 'Mike Johnson',
-      department: 'IT',
-      amount: '$500',
-      date: '2025-10-03',
-      status: 'pending' as const,
-      priority: 'low' as const,
-    },
-    {
-      id: '4',
-      type: 'Budget Approval',
-      item: 'Office Furniture Set',
-      requestedBy: 'Sarah Williams',
-      department: 'Admin',
-      amount: '$8,500',
-      date: '2025-10-02',
-      status: 'approved' as const,
-      priority: 'high' as const,
-    },
-    {
-      id: '5',
-      type: 'Asset Purchase',
-      item: 'Conference Room Projector',
-      requestedBy: 'Robert Brown',
-      department: 'Operations',
-      amount: '$1,200',
-      date: '2025-10-01',
-      status: 'rejected' as const,
-      priority: 'medium' as const,
-    },
-  ];
+  useEffect(() => {
+    fetchApprovals();
+  }, []);
+
+  const fetchApprovals = async () => {
+    try {
+      setLoading(true);
+      // TODO: Replace with actual API call when approvals endpoint is ready
+      // const data = await approvalsAPI.getAll();
+      // For now, setting empty array to remove hardcoded data
+      setApprovals([]);
+    } catch (error) {
+      console.error('Error fetching approvals:', error);
+      setApprovals([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const filteredApprovals = filter === 'all' 
     ? approvals 
@@ -141,9 +115,25 @@ const Approvals = () => {
       </div>
 
       {/* Approvals List */}
-      <div className="bg-white/70 backdrop-blur-sm border border-gray-200/60 rounded-3xl p-8 shadow-sm">
-        <div className="space-y-4">
-          {filteredApprovals.map((approval) => (
+      {loading ? (
+        <div className="flex justify-center items-center h-64">
+          <div className="bg-white/70 backdrop-blur-sm border border-gray-200/60 rounded-3xl p-8">
+            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary-600 mx-auto"></div>
+            <p className="text-gray-600 text-center mt-4 font-medium">Loading approvals...</p>
+          </div>
+        </div>
+      ) : filteredApprovals.length === 0 ? (
+        <div className="bg-white/70 backdrop-blur-sm border border-gray-200/60 rounded-3xl p-12 text-center">
+          <Clock className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+          <h3 className="text-xl font-bold text-gray-900 mb-2">No Approvals Found</h3>
+          <p className="text-gray-600">
+            {filter === 'all' ? 'No approval requests available' : `No ${filter} requests found`}
+          </p>
+        </div>
+      ) : (
+        <div className="bg-white/70 backdrop-blur-sm border border-gray-200/60 rounded-3xl p-8 shadow-sm">
+          <div className="space-y-4">
+            {filteredApprovals.map((approval) => (
             <div key={approval.id} className="group p-6 rounded-2xl border border-gray-200/60 hover:bg-gray-50/80 transition-all duration-200">
               <div className="flex items-center justify-between">
                 <div className="flex-1">
@@ -189,6 +179,7 @@ const Approvals = () => {
           ))}
         </div>
       </div>
+      )}
     </Layout>
   );
 };

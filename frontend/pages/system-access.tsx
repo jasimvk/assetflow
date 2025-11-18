@@ -23,7 +23,15 @@ const SystemAccessPage = () => {
   const [requests, setRequests] = useState<SystemAccessRequest[]>([]);
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState<any[]>([]);
-
+  const [showModal, setShowModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [activeTab, setActiveTab] = useState<'all' | 'pending' | 'approved' | 'rejected'>('all');
+  
+  // Rejection modal state
+  const [showRejectModal, setShowRejectModal] = useState(false);
+  const [rejectingRequestId, setRejectingRequestId] = useState<string | null>(null);
+  const [rejectionReason, setRejectionReason] = useState('');
+  
   // Load data on component mount
   useEffect(() => {
     loadRequests();
@@ -50,10 +58,6 @@ const SystemAccessPage = () => {
       console.error('Error loading users:', error);
     }
   };
-
-  const [showModal, setShowModal] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [activeTab, setActiveTab] = useState<'all' | 'pending' | 'approved' | 'rejected'>('all');
   
   // Form state
   const [formData, setFormData] = useState({
@@ -205,21 +209,40 @@ const SystemAccessPage = () => {
   };
 
   const handleReject = async (requestId: string) => {
-    const reason = prompt('Please provide a reason for rejection:');
-    if (!reason) return;
+    setRejectingRequestId(requestId);
+    setRejectionReason('');
+    setShowRejectModal(true);
+  };
+
+  const confirmReject = async () => {
+    if (!rejectionReason.trim()) {
+      alert('Please provide a reason for rejection');
+      return;
+    }
+
+    if (!rejectingRequestId) return;
 
     try {
-      const updated = await systemAccessAPI.updateStatus(requestId, 'rejected', reason);
+      const updated = await systemAccessAPI.updateStatus(rejectingRequestId, 'rejected', rejectionReason);
       if (updated) {
         setRequests(prev => 
-          prev.map(req => req.id === requestId ? { ...req, status: 'rejected' } : req)
+          prev.map(req => req.id === rejectingRequestId ? { ...req, status: 'rejected' } : req)
         );
+        setShowRejectModal(false);
+        setRejectingRequestId(null);
+        setRejectionReason('');
         alert('Request rejected successfully!');
       }
     } catch (error) {
       console.error('Error rejecting request:', error);
       alert('Failed to reject request. Please try again.');
     }
+  };
+
+  const cancelReject = () => {
+    setShowRejectModal(false);
+    setRejectingRequestId(null);
+    setRejectionReason('');
   };
 
   const getStatusColor = (status: string) => {
@@ -964,6 +987,103 @@ const SystemAccessPage = () => {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Rejection Modal */}
+      {showRejectModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6 border-b border-gray-200">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-red-100 rounded-xl">
+                    <XCircle className="h-6 w-6 text-red-600" />
+                  </div>
+                  <h2 className="text-2xl font-bold text-gray-900">Reject Access Request</h2>
+                </div>
+                <button
+                  onClick={cancelReject}
+                  className="p-2 hover:bg-gray-100 rounded-xl transition-colors"
+                >
+                  <XCircle className="h-5 w-5 text-gray-400" />
+                </button>
+              </div>
+            </div>
+
+            <div className="p-6">
+              <p className="text-gray-600 mb-4">
+                Please provide a clear reason for rejecting this access request. This will be sent to the requester.
+              </p>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Rejection Reason <span className="text-red-500">*</span>
+                  </label>
+                  <textarea
+                    value={rejectionReason}
+                    onChange={(e) => setRejectionReason(e.target.value)}
+                    rows={4}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                    placeholder="E.g., Incomplete documentation, Invalid department approval, Security concerns..."
+                    autoFocus
+                  />
+                  {rejectionReason.length > 0 && (
+                    <p className="text-sm text-gray-500 mt-1">
+                      {rejectionReason.length} characters
+                    </p>
+                  )}
+                </div>
+
+                {/* Common rejection reasons */}
+                <div>
+                  <p className="text-sm font-semibold text-gray-700 mb-2">Quick Reasons:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {[
+                      'Incomplete documentation',
+                      'Invalid department approval',
+                      'Duplicate request',
+                      'Security concerns',
+                      'Wrong department',
+                      'Missing information'
+                    ].map((reason) => (
+                      <button
+                        key={reason}
+                        type="button"
+                        onClick={() => setRejectionReason(reason)}
+                        className="px-3 py-1.5 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors"
+                      >
+                        {reason}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-6 border-t border-gray-200 flex items-center justify-end gap-3">
+              <button
+                type="button"
+                onClick={cancelReject}
+                className="px-6 py-3 border border-gray-300 rounded-xl text-gray-700 font-semibold hover:bg-gray-50 transition-all duration-200"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={confirmReject}
+                disabled={!rejectionReason.trim()}
+                className={`px-6 py-3 rounded-xl font-semibold transition-all duration-200 shadow-md hover:shadow-lg ${
+                  rejectionReason.trim()
+                    ? 'bg-red-500 text-white hover:bg-red-600'
+                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                }`}
+              >
+                Reject Request
+              </button>
+            </div>
           </div>
         </div>
       )}

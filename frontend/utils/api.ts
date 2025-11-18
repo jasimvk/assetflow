@@ -193,6 +193,11 @@ export const systemAccessAPI = {
         .from('system_access_requests')
         .update({ 
           status,
+          ...(status === 'approved' && { approved_at: new Date().toISOString() }),
+          ...(status === 'rejected' && { 
+            rejected_at: new Date().toISOString(),
+            rejection_reason: comments || 'No reason provided'
+          }),
           updated_at: new Date().toISOString()
         })
         .eq('id', id)
@@ -207,7 +212,7 @@ export const systemAccessAPI = {
         field_changed: 'status',
         old_value: '', // Would need to fetch old value
         new_value: status,
-        comments
+        comments: status === 'rejected' ? (comments || 'No reason provided') : comments
       }]);
       
       return data;

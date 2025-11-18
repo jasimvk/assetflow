@@ -1,31 +1,17 @@
 const express = require('express');
 const router = express.Router();
 
-// Login endpoint for development
+// Login endpoint
 router.post('/login', async (req, res) => {
   try {
-    // In development mode, return a mock token
-    if (process.env.NODE_ENV === 'development') {
-      const mockUser = {
-        id: 'dev-user-123',
-        email: 'dev@example.com',
-        name: 'Development User',
-        role: 'admin'
-      };
-
-      res.json({
-        success: true,
-        user: mockUser,
-        token: 'dev-token-123',
-        message: 'Development login successful'
-      });
-    } else {
-      // In production, this would handle Azure AD authentication
-      res.status(501).json({ 
-        error: 'Production authentication not yet implemented',
-        message: 'Please configure Azure AD authentication for production use'
-      });
-    }
+    // TODO: Implement Azure AD authentication
+    // This should integrate with Microsoft Entra ID (Azure AD)
+    // For production, remove mock authentication and implement proper Azure AD OAuth flow
+    
+    res.status(501).json({ 
+      error: 'Authentication not configured',
+      message: 'Please configure Azure Active Directory (Entra ID) authentication. See SETUP_CREDENTIALS.md for instructions.'
+    });
   } catch (error) {
     console.error('Login error:', error);
     res.status(500).json({ error: 'Login failed' });
@@ -49,24 +35,14 @@ router.post('/logout', async (req, res) => {
 // Get current user endpoint
 router.get('/me', async (req, res) => {
   try {
-    // For development, return mock user data
-    if (process.env.NODE_ENV === 'development') {
-      const mockUser = {
-        id: 'dev-user-123',
-        email: 'dev@example.com',
-        name: 'Development User',
-        role: 'admin',
-        department: 'IT'
-      };
-
-      res.json({
-        success: true,
-        user: mockUser
-      });
-    } else {
-      // In production, this would validate the token and return user data
-      res.status(401).json({ error: 'Authentication required' });
-    }
+    // TODO: Implement real user authentication
+    // Validate token and fetch user from database
+    // For production, implement proper JWT validation and user lookup
+    
+    res.status(401).json({ 
+      error: 'Authentication required',
+      message: 'Please configure authentication. See SETUP_CREDENTIALS.md for instructions.'
+    });
   } catch (error) {
     console.error('Get user error:', error);
     res.status(500).json({ error: 'Failed to get user data' });
@@ -78,19 +54,18 @@ router.post('/verify', async (req, res) => {
   try {
     const { token } = req.body;
 
-    if (process.env.NODE_ENV === 'development' && token === 'dev-token-123') {
-      res.json({
-        valid: true,
-        user: {
-          id: 'dev-user-123',
-          email: 'dev@example.com',
-          name: 'Development User',
-          role: 'admin'
-        }
-      });
-    } else {
-      res.json({ valid: false });
+    // TODO: Implement real token verification
+    // Validate JWT token against Azure AD or your auth provider
+    
+    if (!token) {
+      return res.json({ valid: false });
     }
+    
+    res.json({ 
+      valid: false,
+      error: 'Authentication not configured',
+      message: 'Please configure proper token verification'
+    });
   } catch (error) {
     console.error('Token verification error:', error);
     res.status(500).json({ error: 'Token verification failed' });

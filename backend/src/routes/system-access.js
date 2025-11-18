@@ -244,9 +244,9 @@ router.post('/', validateAccessRequest, async (req, res) => {
 // Update system access request status
 router.patch('/:id/status', async (req, res) => {
   try {
-    const { status } = req.body;
+    const { status, comments, reason } = req.body;
     
-    if (!['pending', 'in_progress', 'completed', 'cancelled'].includes(status)) {
+    if (!['pending', 'in_progress', 'approved', 'rejected', 'completed', 'cancelled'].includes(status)) {
       return res.status(400).json({ error: 'Invalid status' });
     }
 
@@ -254,6 +254,16 @@ router.patch('/:id/status', async (req, res) => {
       status,
       updated_at: new Date().toISOString()
     };
+
+    if (status === 'approved') {
+      updateData.approved_at = new Date().toISOString();
+      updateData.approved_by = req.user?.id;
+    }
+
+    if (status === 'rejected') {
+      updateData.rejected_at = new Date().toISOString();
+      updateData.rejection_reason = reason || comments || 'No reason provided';
+    }
 
     if (status === 'completed') {
       updateData.completed_at = new Date().toISOString();
@@ -269,16 +279,48 @@ router.patch('/:id/status', async (req, res) => {
 
     if (error) throw error;
 
-    // Log the action
+    // Log the action to history
+    const historyData = {
+      access_request_id: req.params.id,
+      action: status === 'approved' ? 'approved' : status === 'rejected' ? 'rejected' : 'status_changed',
+      description: status === 'rejected' 
+        ? `Request rejected: ${updateData.rejection_reason}`
+        : `Status changed to ${status}`,
+      new_status: status,
+      performed_by: req.user?.id
+    };
+
+    if (comments) {
+      historyData.comments = comments;
+    }
+
     await supabase
       .from('access_request_history')
-      .insert([{
-        access_request_id: req.params.id,
-        action: 'status_changed',
-        description: `Status changed to ${status}`,
-        new_status: status,
-        performed_by: req.user?.id
-      }]);
+      .insert([historyData]);
+
+    // Create notification for the requester
+    if (status === 'approved' || status === 'rejected') {
+      const { data: requestData } = await supabase
+        .from('system_access_requests')
+        .select('requested_by, employee_first_name, employee_last_name, request_number')
+        .eq('id', req.params.id)
+        .single();
+
+      if (requestData && requestData.requested_by) {
+        await supabase
+          .from('notifications')
+          .insert([{
+            user_id: requestData.requested_by,
+            title: status === 'approved' ? 'Access Request Approved' : 'Access Request Rejected',
+            message: status === 'approved'
+              ? `Your access request #${requestData.request_number} has been approved.`
+              : `Your access request #${requestData.request_number} has been rejected. Reason: ${updateData.rejection_reason}`,
+            type: status === 'approved' ? 'success' : 'warning',
+            related_id: req.params.id,
+            related_type: 'access_request'
+          }]);
+      }
+    }
 
     res.json(data);
   } catch (error) {
