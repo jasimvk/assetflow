@@ -8,13 +8,13 @@ const supabase = createClient(
 
 async function testConnection() {
   console.log('🔍 Testing Backend Supabase Connection...\n');
-  
+
   // Check environment variables
   console.log('📋 Configuration:');
   console.log(`URL: ${process.env.SUPABASE_URL ? '✅ Set' : '❌ Missing'}`);
   console.log(`Service Role Key: ${process.env.SUPABASE_SERVICE_ROLE_KEY ? '✅ Set' : '❌ Missing'}`);
   console.log(`Anon Key: ${process.env.SUPABASE_ANON_KEY ? '✅ Set' : '❌ Missing'}\n`);
-  
+
   if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
     console.error('❌ Environment variables not configured!');
     console.log('\nPlease create /backend/.env with:');
@@ -31,7 +31,7 @@ async function testConnection() {
       .from('users')
       .select('*')
       .limit(5);
-    
+
     if (usersError) {
       console.error('❌ Users table error:', usersError.message);
     } else {
@@ -52,7 +52,7 @@ async function testConnection() {
       .select('*', { count: 'exact' })
       .order('created_at', { ascending: false })
       .limit(5);
-    
+
     if (requestsError) {
       console.error('❌ System access requests error:', requestsError.message);
     } else {
@@ -77,20 +77,20 @@ async function testConnection() {
       oracle_fusion_it_admin: true,
       require_laptop: true
     };
-    
+
     const { data: insertedRequest, error: insertError } = await supabase
       .from('system_access_requests')
       .insert(testRequest)
       .select()
       .single();
-    
+
     if (insertError) {
       console.error('❌ INSERT failed:', insertError.message);
     } else {
       console.log('✅ INSERT successful');
       console.log(`   Created request: ${insertedRequest.request_number}`);
       console.log('   Request number auto-generated: ✅');
-      
+
       // Test 4: Verify history was logged
       console.log('\n📝 Test 4: Checking audit trail...');
       const { data: history, error: historyError } = await supabase
@@ -98,7 +98,7 @@ async function testConnection() {
         .select('*')
         .eq('request_id', insertedRequest.id)
         .order('changed_at', { ascending: false });
-      
+
       if (historyError) {
         console.error('❌ History check failed:', historyError.message);
       } else {
@@ -112,14 +112,14 @@ async function testConnection() {
       console.log('\n📝 Test 5: Testing UPDATE permission...');
       const { data: updatedRequest, error: updateError } = await supabase
         .from('system_access_requests')
-        .update({ 
+        .update({
           status: 'in_progress',
           assigned_to: 'Admin User'
         })
         .eq('id', insertedRequest.id)
         .select()
         .single();
-      
+
       if (updateError) {
         console.error('❌ UPDATE failed:', updateError.message);
       } else {
@@ -133,7 +133,7 @@ async function testConnection() {
         .from('system_access_requests')
         .delete()
         .eq('id', insertedRequest.id);
-      
+
       if (deleteError) {
         console.error('❌ DELETE failed:', deleteError.message);
       } else {
@@ -141,13 +141,25 @@ async function testConnection() {
       }
     }
 
+    // Test 6.5: Check categories and locations
+    console.log('\n📝 Test 6.5: Checking categories and locations...');
+    const { data: categories, count: catCount } = await supabase
+      .from('categories')
+      .select('*', { count: 'exact' });
+    console.log(`   Categories: ${catCount} rows`);
+
+    const { data: locations, count: locCount } = await supabase
+      .from('locations')
+      .select('*', { count: 'exact' });
+    console.log(`   Locations: ${locCount} rows`);
+
     // Test 7: Check assets table
     console.log('\n📝 Test 7: Checking assets table...');
     const { data: assets, error: assetsError, count: assetsCount } = await supabase
       .from('assets')
       .select('*', { count: 'exact' })
       .limit(10);
-    
+
     if (assetsError) {
       console.error('❌ Assets table error:', assetsError.message);
     } else {
@@ -165,7 +177,7 @@ async function testConnection() {
       .from('vw_dashboard_stats')
       .select('*')
       .single();
-    
+
     if (statsError) {
       console.error('❌ Dashboard view error:', statsError.message);
     } else {
@@ -182,7 +194,7 @@ async function testConnection() {
       .from('maintenance_records')
       .select('*', { count: 'exact' })
       .limit(5);
-    
+
     if (maintenanceError) {
       console.error('❌ Maintenance records error:', maintenanceError.message);
     } else {
@@ -195,7 +207,7 @@ async function testConnection() {
       .from('notifications')
       .select('*', { count: 'exact' })
       .limit(5);
-    
+
     if (notificationsError) {
       console.error('❌ Notifications error:', notificationsError.message);
     } else {

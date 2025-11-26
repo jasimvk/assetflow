@@ -10,7 +10,7 @@ const userRoutes = require('./routes/users');
 const notificationRoutes = require('./routes/notifications');
 const authRoutes = require('./routes/auth');
 const systemAccessRoutes = require('./routes/system-access');
-const authMiddleware = require('./middleware/auth');
+const mockAuth = require('./middleware/mockAuth');
 const errorHandler = require('./middleware/errorHandler');
 const logger = require('./utils/logger');
 
@@ -44,8 +44,8 @@ app.use((req, res, next) => {
 
 // Health check endpoint
 app.get('/health', (req, res) => {
-  res.status(200).json({ 
-    status: 'OK', 
+  res.status(200).json({
+    status: 'OK',
     timestamp: new Date().toISOString(),
     version: process.env.npm_package_version || '1.0.0'
   });
@@ -53,11 +53,11 @@ app.get('/health', (req, res) => {
 
 // API routes
 app.use('/api/auth', authRoutes); // Auth routes don't need auth middleware
-app.use('/api/assets', authMiddleware, assetRoutes);
-app.use('/api/maintenance', authMiddleware, maintenanceRoutes);
-app.use('/api/users', authMiddleware, userRoutes);
-app.use('/api/notifications', authMiddleware, notificationRoutes);
-app.use('/api/system-access', authMiddleware, systemAccessRoutes);
+app.use('/api/assets', mockAuth, assetRoutes);
+app.use('/api/maintenance', mockAuth, maintenanceRoutes);
+app.use('/api/users', mockAuth, userRoutes);
+app.use('/api/notifications', mockAuth, notificationRoutes);
+app.use('/api/system-access', mockAuth, systemAccessRoutes);
 
 // Error handling middleware
 app.use(errorHandler);

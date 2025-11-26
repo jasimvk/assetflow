@@ -2,7 +2,7 @@ const express = require('express');
 const { body, validationResult } = require('express-validator');
 const supabase = require('../config/database');
 const { requireRole } = require('../middleware/rbac');
-const { ROLES } = require('../../shared/roles');
+const { ROLES } = require('../../../shared/roles');
 const mockAuth = require('../middleware/mockAuth');
 const router = express.Router();
 

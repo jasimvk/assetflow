@@ -3,13 +3,13 @@
  * Express middleware for role-based access control
  */
 
-const { 
-  ROLES, 
-  PERMISSIONS, 
-  hasPermission, 
+const {
+  ROLES,
+  PERMISSIONS,
+  hasPermission,
   hasAnyPermission,
-  canPerformAction 
-} = require('../../shared/roles');
+  canPerformAction
+} = require('../../../shared/roles');
 
 /**
  * Middleware to require specific role(s)
@@ -23,14 +23,14 @@ const {
 function requireRole(...allowedRoles) {
   return (req, res, next) => {
     if (!req.user) {
-      return res.status(401).json({ 
+      return res.status(401).json({
         error: 'Unauthorized',
-        message: 'Authentication required' 
+        message: 'Authentication required'
       });
     }
 
     if (!req.user.role || !allowedRoles.includes(req.user.role)) {
-      return res.status(403).json({ 
+      return res.status(403).json({
         error: 'Forbidden',
         message: 'You do not have permission to access this resource',
         required_role: allowedRoles,
@@ -54,18 +54,18 @@ function requireRole(...allowedRoles) {
 function requirePermission(...requiredPermissions) {
   return (req, res, next) => {
     if (!req.user || !req.user.role) {
-      return res.status(401).json({ 
+      return res.status(401).json({
         error: 'Unauthorized',
-        message: 'Authentication required' 
+        message: 'Authentication required'
       });
     }
 
-    const hasRequiredPermission = requiredPermissions.some(permission => 
+    const hasRequiredPermission = requiredPermissions.some(permission =>
       hasPermission(req.user.role, permission)
     );
 
     if (!hasRequiredPermission) {
-      return res.status(403).json({ 
+      return res.status(403).json({
         error: 'Forbidden',
         message: 'You do not have permission to perform this action',
         required_permissions: requiredPermissions,
@@ -141,9 +141,9 @@ function checkResourceOwnership(getResourceFn, permission) {
   return async (req, res, next) => {
     try {
       if (!req.user) {
-        return res.status(401).json({ 
+        return res.status(401).json({
           error: 'Unauthorized',
-          message: 'Authentication required' 
+          message: 'Authentication required'
         });
       }
 
@@ -151,15 +151,15 @@ function checkResourceOwnership(getResourceFn, permission) {
       const resource = await getResourceFn(req);
 
       if (!resource) {
-        return res.status(404).json({ 
+        return res.status(404).json({
           error: 'Not Found',
-          message: 'Resource not found' 
+          message: 'Resource not found'
         });
       }
 
       // Check if user can perform action on this resource
       if (!canPerformAction(req.user, permission, resource)) {
-        return res.status(403).json({ 
+        return res.status(403).json({
           error: 'Forbidden',
           message: 'You do not have permission to access this resource',
           reason: req.user.role === ROLES.MANAGER ? 'Resource not in your department' : 'Resource not owned by you'
@@ -171,9 +171,9 @@ function checkResourceOwnership(getResourceFn, permission) {
       next();
     } catch (error) {
       console.error('Error checking resource ownership:', error);
-      res.status(500).json({ 
+      res.status(500).json({
         error: 'Internal Server Error',
-        message: 'Error checking permissions' 
+        message: 'Error checking permissions'
       });
     }
   };
@@ -188,9 +188,9 @@ function logAccess() {
     const timestamp = new Date().toISOString();
     const user = req.user ? `${req.user.name} (${req.user.role})` : 'Anonymous';
     const action = `${req.method} ${req.path}`;
-    
+
     console.log(`[ACCESS] ${timestamp} | User: ${user} | Action: ${action}`);
-    
+
     // You can also log to database here
     // await logAccessAttempt({
     //   user_id: req.user?.id,

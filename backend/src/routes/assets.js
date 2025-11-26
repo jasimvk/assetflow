@@ -2,7 +2,7 @@ const express = require('express');
 const { body, validationResult } = require('express-validator');
 const supabase = require('../config/database');
 const { requireRole, requirePermission, applyDataScope } = require('../middleware/rbac');
-const { ROLES, PERMISSIONS } = require('../../shared/roles');
+const { ROLES, PERMISSIONS } = require('../../../shared/roles');
 const mockAuth = require('../middleware/mockAuth');
 const router = express.Router();
 
@@ -190,7 +190,7 @@ router.get('/stats/summary', mockAuth, requireRole(ROLES.ADMIN, ROLES.MANAGER), 
     assets.forEach(asset => {
       // Count by category
       stats.byCategory[asset.category] = (stats.byCategory[asset.category] || 0) + 1;
-      
+
       // Count by condition
       stats.byCondition[asset.condition]++;
     });
