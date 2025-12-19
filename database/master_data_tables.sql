@@ -3,6 +3,19 @@
 -- These tables support searchable dropdowns with "Add +" functionality
 
 -- ============================================
+-- LOCATIONS TABLE (Create if not exists)
+-- ============================================
+CREATE TABLE IF NOT EXISTS locations (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL,
+    address TEXT,
+    building VARCHAR(100),
+    floor VARCHAR(50),
+    room VARCHAR(50),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- ============================================
 -- MANUFACTURERS TABLE
 -- ============================================
 CREATE TABLE IF NOT EXISTS manufacturers (
@@ -272,6 +285,7 @@ CREATE INDEX IF NOT EXISTS idx_locations_name ON locations(name);
 -- ============================================
 -- ENABLE RLS (Row Level Security)
 -- ============================================
+ALTER TABLE locations ENABLE ROW LEVEL SECURITY;
 ALTER TABLE manufacturers ENABLE ROW LEVEL SECURITY;
 ALTER TABLE models ENABLE ROW LEVEL SECURITY;
 ALTER TABLE os_versions ENABLE ROW LEVEL SECURITY;
@@ -279,13 +293,27 @@ ALTER TABLE cpu_types ENABLE ROW LEVEL SECURITY;
 ALTER TABLE ram_sizes ENABLE ROW LEVEL SECURITY;
 ALTER TABLE storage_sizes ENABLE ROW LEVEL SECURITY;
 
--- Create policies for authenticated users
-CREATE POLICY "Allow all access to manufacturers" ON manufacturers FOR ALL USING (true);
-CREATE POLICY "Allow all access to models" ON models FOR ALL USING (true);
-CREATE POLICY "Allow all access to os_versions" ON os_versions FOR ALL USING (true);
-CREATE POLICY "Allow all access to cpu_types" ON cpu_types FOR ALL USING (true);
-CREATE POLICY "Allow all access to ram_sizes" ON ram_sizes FOR ALL USING (true);
-CREATE POLICY "Allow all access to storage_sizes" ON storage_sizes FOR ALL USING (true);
+-- Create policies for full access (SELECT, INSERT, UPDATE, DELETE)
+DROP POLICY IF EXISTS "locations_full_access" ON locations;
+CREATE POLICY "locations_full_access" ON locations FOR ALL USING (true) WITH CHECK (true);
+
+DROP POLICY IF EXISTS "manufacturers_full_access" ON manufacturers;
+CREATE POLICY "manufacturers_full_access" ON manufacturers FOR ALL USING (true) WITH CHECK (true);
+
+DROP POLICY IF EXISTS "models_full_access" ON models;
+CREATE POLICY "models_full_access" ON models FOR ALL USING (true) WITH CHECK (true);
+
+DROP POLICY IF EXISTS "os_versions_full_access" ON os_versions;
+CREATE POLICY "os_versions_full_access" ON os_versions FOR ALL USING (true) WITH CHECK (true);
+
+DROP POLICY IF EXISTS "cpu_types_full_access" ON cpu_types;
+CREATE POLICY "cpu_types_full_access" ON cpu_types FOR ALL USING (true) WITH CHECK (true);
+
+DROP POLICY IF EXISTS "ram_sizes_full_access" ON ram_sizes;
+CREATE POLICY "ram_sizes_full_access" ON ram_sizes FOR ALL USING (true) WITH CHECK (true);
+
+DROP POLICY IF EXISTS "storage_sizes_full_access" ON storage_sizes;
+CREATE POLICY "storage_sizes_full_access" ON storage_sizes FOR ALL USING (true) WITH CHECK (true);
 
 -- ============================================
 -- SUMMARY

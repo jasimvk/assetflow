@@ -495,7 +495,7 @@ export const locationsAPI = {
     try {
       const { data, error } = await supabase
         .from('locations')
-        .select('id, name, address, building, floor, room')
+        .select('id, name')
         .order('name', { ascending: true });
       
       if (error) throw error;
@@ -511,14 +511,17 @@ export const locationsAPI = {
       const { data, error } = await supabase
         .from('locations')
         .insert([{ name }])
-        .select()
+        .select('id, name')
         .single();
       
-      if (error) throw error;
+      if (error) {
+        console.error('Error creating location:', error);
+        throw error;
+      }
       return data;
     } catch (error) {
       handleError(error);
-      return null;
+      throw error; // Re-throw so the component knows it failed
     }
   }
 };

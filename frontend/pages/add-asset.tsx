@@ -99,7 +99,7 @@ const AddAsset = () => {
   const [condition, setCondition] = useState<'excellent' | 'good' | 'fair' | 'poor'>('good');
 
   // Financial & Warranty
-  const [purchaseDate, setPurchaseDate] = useState('');
+  const [purchaseDate, setPurchaseDate] = useState(new Date().toISOString().split('T')[0]);
   const [purchaseCost, setPurchaseCost] = useState('');
   const [currentValue, setCurrentValue] = useState('');
   const [warrantyExpiry, setWarrantyExpiry] = useState('');
@@ -322,7 +322,7 @@ const AddAsset = () => {
         previous_owner: previousOwner || null,
         status,
         condition,
-        purchase_date: purchaseDate || null,
+        purchase_date: purchaseDate || new Date().toISOString().split('T')[0],
         purchase_cost: purchaseCost ? parseFloat(purchaseCost) : 0,
         current_value: currentValue ? parseFloat(currentValue) : 0,
         warranty_expiry: warrantyExpiry || null,
