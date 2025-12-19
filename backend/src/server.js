@@ -10,6 +10,7 @@ const userRoutes = require('./routes/users');
 const notificationRoutes = require('./routes/notifications');
 const authRoutes = require('./routes/auth');
 const systemAccessRoutes = require('./routes/system-access');
+const masterDataRoutes = require('./routes/masterData');
 const mockAuth = require('./middleware/mockAuth');
 const errorHandler = require('./middleware/errorHandler');
 const logger = require('./utils/logger');
@@ -58,6 +59,7 @@ app.use('/api/maintenance', mockAuth, maintenanceRoutes);
 app.use('/api/users', mockAuth, userRoutes);
 app.use('/api/notifications', mockAuth, notificationRoutes);
 app.use('/api/system-access', mockAuth, systemAccessRoutes);
+app.use('/api/master-data', mockAuth, masterDataRoutes);
 
 // Error handling middleware
 app.use(errorHandler);
